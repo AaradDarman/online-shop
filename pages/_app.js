@@ -10,7 +10,9 @@ import { ToastContainer } from "react-toastify";
 
 import RTL from "../components/RTL";
 import { muiDarkTheme, muiLightTheme } from "../styles/mui-theme";
+import { useDarkMode } from "../utils/useDarkMode";
 import createEmotionCache from "../styles/createEmotionCache";
+import AppContext from "../context/AppContext";
 import store from "../redux/store";
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,6 +23,7 @@ const clientSideEmotionCache = createEmotionCache();
 function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout || ((page) => page);
+  const [theme, toggleTheme, componentMounted] = useDarkMode();
 
   if (!componentMounted) {
     return <div />;
@@ -40,7 +43,9 @@ function MyApp(props) {
           <CssBaseline />
           <RTL>
             <Provider store={store}>
+              <AppContext toggleTheme={toggleTheme}>
                 {getLayout(<Component {...pageProps} />)}
+              </AppContext>
             </Provider>
           </RTL>
         </ThemeProvider>
