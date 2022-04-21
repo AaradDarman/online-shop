@@ -6,5 +6,23 @@
   font-style: normal;
   font-weight: normal;
 }
+.loading-spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(41,49,51,0.5);
+  z-index: 9999;
 }
+.loading-spinner-modal{
+  position: absolute;
+  width: 100%;
+}
+.Toastify__toast-body {
+  font-family: 'BYekan';
+  text-align:right;
 }
