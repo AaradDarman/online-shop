@@ -15,6 +15,7 @@ import createEmotionCache from "../styles/createEmotionCache";
 import AppContext from "../context/AppContext";
 import store from "../redux/store";
 import "../styles/globals.css";
+import "../styles/Categories.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 

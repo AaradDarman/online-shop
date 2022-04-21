@@ -18,14 +18,41 @@ import LoadingSpinner from "../../components/shared/LoadingSpinner";
 const Wraper = styled.div`
   width: 100%;
   height: 100%;
+  .new-product-wraper {
+    background-color: ${({ theme }) => theme.palette.secondary.main};
+  }
+  @media (max-width: 576px) {
+    .new-product-wraper {
+      margin-top: 3rem;
+    }
+  }
 `;
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%) !important",
+  bgcolor: "background.default",
+  border: "none",
+  boxShadow: 0,
+  px: 4,
+};
+
 const Products = (props) => {
+  const [addProductModalOpen, setAddProductModalOpen] = useState(false);
   const { page, setPage, sortBy } = useContext(productsContext);
 
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state);
 
+  const handleOpen = () => setAddProductModalOpen(true);
+  const handleClose = () => setAddProductModalOpen(false);
+
+  const handleAddProduct = (formData) => {
+    dispatch(addNewProduct(formData));
+    setAddProductModalOpen(false);
+  };
 
   const handleChangePage = (page) => {
     setPage(page);
@@ -48,6 +75,17 @@ const Products = (props) => {
           products?.status === "deleting"
         }
       />
+      <div className="new-product-wraper container-lg py-2">
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={handleOpen}
+          endIcon={<AddIcon />}
+        >
+          محصول جدید
+        </Button>
+      </div>
       <ProductsComponent
         {...props}
         products={products}
@@ -56,6 +94,25 @@ const Products = (props) => {
         pageRange={10}
         handleChangePage={handleChangePage}
       />
+      <Modal
+        disable
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={addProductModalOpen}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={addProductModalOpen}>
+          <Box sx={modalStyle} className="col-12 col-sm-8 col-md-7 col-lg-5">
+            <ProductContext>
+              <AddProduct onCancel={handleClose} onSave={handleAddProduct} />
+            </ProductContext>
+          </Box>
+        </Fade>
+      </Modal>
     </Wraper>
   );
 };
