@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 
 import { productsContext } from "./products-context";
 import ProductContext from "./ProductContext";
+import EditProduct from "../components/admin-dashboard/EditProduct";
 import { deleteProduct, editProduct } from "../redux/slices/products";
 
 const CancelButton = MuiStyled(Button)(({ theme }) => ({
@@ -124,6 +125,29 @@ const ProductsContext = ({ children }) => {
             </Button>
           </DialogActions>
         </DeleteDialog>
+        <Modal
+          disable
+          aria-labelledby="edit-product-modal-title"
+          aria-describedby="edit-product-modal-description"
+          open={isEditProductModalOpen}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={isEditProductModalOpen}>
+            <Box sx={modalStyle} className="col-12 col-sm-8 col-md-7 col-lg-5">
+              <ProductContext>
+                <EditProduct
+                  onCancel={() => setIsEditProductModalOpen(false)}
+                  onEdit={handleEditProduct}
+                  product={editProductTarget}
+                />
+              </ProductContext>
+            </Box>
+          </Fade>
+        </Modal>
         {children}
       </>
     </productsContext.Provider>
