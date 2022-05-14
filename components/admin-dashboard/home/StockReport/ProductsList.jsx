@@ -218,7 +218,7 @@ const ProductsList = ({
               <StyledTableRow key={product._id}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{`${product.color}${
-                  " - " + product.size
+                  product?.size ? " - " + product?.size : ""
                 }`}</TableCell>
                 <TableCell className="d-none d-md-table-cell">
                   {getPersianDate(product.createAt)}
