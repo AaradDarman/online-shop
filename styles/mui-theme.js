@@ -12,7 +12,16 @@ const Byekan = {
 };
 
 export let muiDarkTheme = createTheme({
-  direction: 'rtl',
+  breakpoints: {
+    values: {
+      xs: 576,
+      sm: 577,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+    },
+  },
+  direction: "rtl",
   typography: {
     fontFamily: "BYekan",
   },
@@ -84,7 +93,16 @@ export let muiDarkTheme = createTheme({
 muiDarkTheme = responsiveFontSizes(muiDarkTheme);
 
 export let muiLightTheme = createTheme({
-  direction: 'rtl',
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+  direction: "rtl",
   typography: {
     fontFamily: "BYekan",
   },
