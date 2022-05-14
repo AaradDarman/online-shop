@@ -4,6 +4,7 @@ import Head from "next/head";
 import styled from "styled-components";
 
 import AdminLayout from "components/layouts/AdminLayout";
+import StockReport from "components/admin-dashboard/home/StockReport/Index";
 import RecentOrders from "components/admin-dashboard/home/RecentOrders";
 
 const StyledWraper = styled.div`
@@ -27,6 +28,9 @@ const Dashboard = (props) => {
       </Head>
       <StyledSection className="col-12 col-lg-6 h-100">
         <RecentOrders />
+      </StyledSection>
+      <StyledSection className="col-12 col-lg-6 h-100">
+        <StockReport className="mt-4 h-100" />
       </StyledSection>
     </StyledWraper>
   );
