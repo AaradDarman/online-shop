@@ -6,16 +6,21 @@ export const numberWithoutCommas = (number) => {
   return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const compactNumber = (number) => {
-  const suffixes = ["", "هزار", "میلیون", "میلیارد"];
-  const suffixNum = Math.floor(("" + number).length / 4);
-  let shortValue = parseFloat(
-    (suffixNum !== 0 ? number / Math.pow(1000, suffixNum) : number).toPrecision(
-      2
-    )
-  );
-  if (shortValue % 1 !== 0) {
-    shortValue = shortValue.toFixed(1);
-  }
-  return shortValue + " " + suffixes[suffixNum];
+export const compactNumber = (num) => {
+  const lookup = [
+    { value: 1, symbol: "" },
+    { value: 1e3, symbol: "هزار" },
+    { value: 1e6, symbol: "میلیون" },
+    { value: 1e9, symbol: "میلیارد" },
+  ];
+  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  var item = lookup
+    .slice()
+    .reverse()
+    .find(function (item) {
+      return num >= item.value;
+    });
+  return item
+    ? (num / item.value).toFixed(1).replace(rx, "$1") + item.symbol
+    : "0";
 };
