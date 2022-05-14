@@ -15,7 +15,7 @@ import { appContext } from "../../../context/app-context";
 const Wraper = styled.div`
   .header {
     display: flex;
-    width: 200px;
+    width: 150px;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
@@ -27,9 +27,9 @@ const Wraper = styled.div`
   }
   .navigation {
     height: 100vh;
-    width: 200px;
+    width: 150px;
     background-color: ${({ theme }) => theme.palette.secondary.main};
-    border-left:1px solid ${({ theme }) => theme.palette.secondary.light};
+    border-left: 1px solid ${({ theme }) => theme.palette.secondary.light};
     transition: width 1s ease;
     overflow-x: hidden;
     position: fixed;
@@ -51,7 +51,7 @@ const Wraper = styled.div`
   .menu-item {
     display: flex;
     align-items: center;
-    width: 200px;
+    width: 150px;
     position: relative;
     opacity: 0.7;
     margin: 0.6rem 0;
@@ -124,7 +124,7 @@ const Wraper = styled.div`
     align-items: center;
     overflow-y: scroll;
     height: 100vh;
-    margin-right: 200px;
+    margin-right: 150px;
   }
   .back-icon {
     color: ${({ theme }) => theme.palette.text.main};
@@ -156,13 +156,18 @@ const Wraper = styled.div`
       width: 56px;
     }
     .navigation:hover {
-      width: 200px;
+      width: 150px;
     }
     .main-section {
       margin-right: 56px;
     }
     .header {
       padding-right: 0.3rem;
+    }
+  }
+  @media (max-width: 992px) {
+    .main-section {
+      height: unset;
     }
   }
   @media (max-width: 576px) {
@@ -173,7 +178,6 @@ const Wraper = styled.div`
     }
     .main-section {
       overflow-y: hidden;
-      height: unset;
       margin-right: 0;
     }
     header {
@@ -190,7 +194,6 @@ const AdminLayout = ({ children }) => {
 
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
-
 
   return (
     // <RouteGuard>

@@ -18,7 +18,7 @@ const StyledNav = styled.nav`
   flex-direction: column;
   .header {
     display: flex;
-    width: 200px;
+    width: 150px;
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
@@ -39,7 +39,7 @@ const StyledNav = styled.nav`
   .menu-item {
     display: flex;
     align-items: center;
-    width: 200px;
+    width: 150px;
     position: relative;
     opacity: 0.7;
     margin: 0.6rem 0;
