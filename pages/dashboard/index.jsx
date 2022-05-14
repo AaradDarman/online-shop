@@ -6,6 +6,7 @@ import styled from "styled-components";
 import AdminLayout from "components/layouts/AdminLayout";
 import StockReport from "components/admin-dashboard/home/StockReport/Index";
 import RecentOrders from "components/admin-dashboard/home/RecentOrders";
+import IncomeChart from "components/admin-dashboard/home/IncomeChart";
 
 const StyledWraper = styled.div`
   width: 100%;
@@ -30,6 +31,7 @@ const Dashboard = (props) => {
         <RecentOrders />
       </StyledSection>
       <StyledSection className="col-12 col-lg-6 h-100">
+        <IncomeChart className="mt-4 mt-lg-0" />
         <StockReport className="mt-4 h-100" />
       </StyledSection>
     </StyledWraper>
