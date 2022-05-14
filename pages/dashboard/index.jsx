@@ -4,7 +4,7 @@ import Head from "next/head";
 import styled from "styled-components";
 
 import AdminLayout from "components/layouts/AdminLayout";
-import StockReport from "components/admin-dashboard/home/StockReport/Index";
+import StockReport from "components/admin-dashboard/home/StockReport";
 import RecentOrders from "components/admin-dashboard/home/RecentOrders";
 import IncomeChart from "components/admin-dashboard/home/IncomeChart";
 
