@@ -59,37 +59,39 @@ export const getIncome = createAsyncThunk(
 const slice = createSlice({
   name: "analytics",
   initialState: {
-    status: "idle",
-    recentOrders: [],
-    productsStock: [],
+    recentOrders: { status: "idle", entity: [] },
+    productsStock: { status: "idle", entity: [], totalCount: 0 },
     income: {
-      data: [],
+      status: "idle",
+      entity: [],
       range: [],
     },
   },
   reducers: {},
   extraReducers: {
     [getRecentOrders.fulfilled]: (state, action) => {
-      state.recentOrders = action.payload;
-      state.status = "idle";
+      state.recentOrders.entity = action.payload;
+      state.recentOrders.status = "idle";
     },
     [getRecentOrders.pending]: (state) => {
-      state.status = "loading-recent-orders";
+      state.recentOrders.status = "loading";
     },
     [getProductsStock.fulfilled]: (state, action) => {
-      state.productsStock = action.payload;
-      state.status = "idle";
+      state.productsStock.entity = action.payload.productsStock;
+      state.productsStock.totalCount = action.payload.totalCount;
+      state.productsStock.status = "idle";
     },
     [getProductsStock.pending]: (state) => {
-      state.status = "loading-product-stock";
+      state.productsStock.status = "loading";
+    },
     },
     [getIncome.fulfilled]: (state, action) => {
-      state.income.data = action.payload.incomes;
+      state.income.entity = action.payload.incomes;
       state.income.range = action.payload.dateRange;
-      state.status = "idle";
+      state.income.status = "idle";
     },
     [getIncome.pending]: (state) => {
-      state.status = "loading-income";
+      state.income.status = "loading";
     },
   },
 });

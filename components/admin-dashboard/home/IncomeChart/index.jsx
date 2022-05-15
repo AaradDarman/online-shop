@@ -52,12 +52,12 @@ const IncomeChart = ({ className }) => {
   const [incomeFilter, setIncomeFilter] = useState("weekly");
 
   const dispatch = useDispatch();
-  const { income, status } = useSelector((state) => state.analytics);
+  const { income } = useSelector((state) => state.analytics);
   const { isSm } = breakPoints;
   const series = [
     {
       name: "درآمد",
-      data: income.data,
+      data: income.entity,
     },
   ];
 
@@ -164,7 +164,7 @@ const IncomeChart = ({ className }) => {
         val={incomeFilter}
         onChange={(val) => setIncomeFilter(val)}
       />
-      {status === "loading-income" ? (
+      {income.status === "loading" ? (
         <PulseLoader
           css={override}
           size={10}

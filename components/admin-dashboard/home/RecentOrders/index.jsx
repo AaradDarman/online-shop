@@ -30,7 +30,7 @@ import OrdersList from "./OrdersList";
 
 const RecentOrders = () => {
   const dispatch = useDispatch();
-  const { recentOrders, status } = useSelector((state) => state.analytics);
+  const { recentOrders } = useSelector((state) => state.analytics);
 
   const [sortBy, setSortBy] = useState({ sortLabel: "createAt", desc: true });
   const [search, setSearch] = useState("");
@@ -75,11 +75,11 @@ const RecentOrders = () => {
     >
       <h5 style={{ padding: "6px", marginLeft: "auto" }}>سفارشات اخیر</h5>
       <OrdersList
-        recentOrders={recentOrders}
+        recentOrders={recentOrders.entity}
         sortBy={sortBy}
         handleChangeSort={handleChangeSort}
         handleChangeSearch={(searchTerm) => setSearch(searchTerm)}
-        isLoading={status === "loading-recent-orders"}
+        isLoading={recentOrders.status === "loading"}
       />
     </TableContainer>
   );

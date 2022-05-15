@@ -8,7 +8,7 @@ import { getProductsStock } from "redux/slices/analytics";
 
 const StockReport = ({ className }) => {
   const dispatch = useDispatch();
-  const { productsStock, status } = useSelector((state) => state.analytics);
+  const { productsStock } = useSelector((state) => state.analytics);
 
   const [sortBy, setSortBy] = useState({ sortLabel: "createAt", desc: true });
   const [search, setSearch] = useState("");
@@ -23,12 +23,6 @@ const StockReport = ({ className }) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy, search]);
-
-  useEffect(() => {
-    console.log("status");
-    console.log(status);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
 
   const handleChangeSort = (target) => {
     setSortBy((prev) => {
@@ -58,11 +52,11 @@ const StockReport = ({ className }) => {
     >
       <h5 style={{ padding: "6px", marginLeft: "auto" }}>گزارش موجودی</h5>
       <ProductsList
-        productsStock={productsStock}
+        productsStock={productsStock.entity}
         sortBy={sortBy}
         handleChangeSearch={(searchTerm) => setSearch(searchTerm)}
         handleChangeSort={handleChangeSort}
-        isLoading={status === "loading-product-stock"}
+        isLoading={productsStock.status === "loading"}
       />
     </TableContainer>
   );
