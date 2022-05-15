@@ -7,9 +7,9 @@ const getRecentOrders = (search, sortBy, desc) => {
   });
 };
 
-const getProductsStock = (search, sortBy, desc) => {
+const getProductsStock = (search, sortBy, desc, skip = 0) => {
   return http.get(`${config.api}/products/stock`, {
-    params: { search, sortBy, desc },
+    params: { search, sortBy, desc, skip },
   });
 };
 

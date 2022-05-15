@@ -27,7 +27,29 @@ export const getProductsStock = createAsyncThunk(
     try {
       const { status, data } = await api.getProductsStock(search, sortBy, desc);
       if (status === 200) {
-        return data.productsStock;
+        return data;
+      }
+    } catch (e) {
+      toast.error(e?.response?.data?.message, {
+        position: "bottom-center",
+        closeOnClick: true,
+      });
+    }
+  }
+);
+
+export const loadMoreProductsStock = createAsyncThunk(
+  "analytics/load-more-products-stock",
+  async ({ search, sortBy, desc, skip }) => {
+    try {
+      const { status, data } = await api.getProductsStock(
+        search,
+        sortBy,
+        desc,
+        skip
+      );
+      if (status === 200) {
+        return data;
       }
     } catch (e) {
       toast.error(e?.response?.data?.message, {
@@ -84,6 +106,12 @@ const slice = createSlice({
     [getProductsStock.pending]: (state) => {
       state.productsStock.status = "loading";
     },
+    [loadMoreProductsStock.fulfilled]: (state, action) => {
+      state.productsStock.entity = [
+        ...state.productsStock.entity,
+        ...action.payload.productsStock,
+      ];
+      state.productsStock.totalCount = action.payload.totalCount;
     },
     [getIncome.fulfilled]: (state, action) => {
       state.income.entity = action.payload.incomes;

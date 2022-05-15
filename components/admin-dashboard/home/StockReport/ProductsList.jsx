@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { styled as MuiStyled } from "@mui/material/styles";
 import styled from "styled-components";
@@ -22,8 +22,16 @@ import withSearch from "components/HOC/withSearch";
 import { numberWithCommas } from "utils/number-helper";
 import { getPersianDate } from "utils/date-helper";
 import useBreakpoints from "utils/useBreakPoints";
+// import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroller";
+import useInfiniteScroll from "components/hooks/useInfiniteScroll";
 
 const StyledTable = MuiStyled(Table)(({ theme }) => ({
+  "&": {
+    position: "relative",
+    paddingBottom: "20px",
+    minHeight: "200px",
+  },
   "& td, th": {
     border: 0,
     padding: "6px",
@@ -113,6 +121,13 @@ z-index: 9999;
 transform: translate(-50%, -50%);
 `;
 
+const fetchMoreLoaderStyle = Loadercss`
+position: absolute;
+left: 50%;
+bottom: 0;
+z-index: 9999;
+`;
+
 const ProductsList = ({
   productsStock,
   searchTerm,
@@ -120,10 +135,28 @@ const ProductsList = ({
   handleChangeSort,
   handleChangeSearch,
   isLoading,
+  handleLoadMoreData,
+  productsStockTotalCount,
 }) => {
   let debouncedSeasrchTerm = useDebounce(searchTerm, 500);
+  const parentRef = useRef(null);
   const breakPoints = useBreakpoints();
   const theme = useTheme();
+
+  const handleScrollEnd = () => {
+    if (productsStock.length < productsStockTotalCount) {
+      handleLoadMoreData(() => {
+        setIsFetching(false);
+      });
+    } else {
+      setIsFetching(false);
+    }
+  };
+
+  const [isFetching, setIsFetching] = useInfiniteScroll(
+    parentRef,
+    handleScrollEnd
+  );
 
   const checkStockStatus = (quantity) => {
     return quantity === 0
@@ -145,12 +178,8 @@ const ProductsList = ({
   }, [debouncedSeasrchTerm]);
 
   return (
-    <StyledContainer {...breakPoints}>
-      <StyledTable
-        stickyHeader
-        aria-label="product inventory table"
-        size="small"
-      >
+    <StyledContainer {...breakPoints} ref={parentRef}>
+      <StyledTable stickyHeader size="small">
         <TableHead>
           <TableRow>
             <StyledTableCell>نام محصول</StyledTableCell>
@@ -236,6 +265,14 @@ const ProductsList = ({
                 <TableCell>{product.quantity}</TableCell>
               </StyledTableRow>
             ))
+          )}
+          {isFetching && (
+            <PulseLoader
+              css={fetchMoreLoaderStyle}
+              size={10}
+              color={theme.palette.primary.main}
+              loading={true}
+            />
           )}
         </TableBody>
       </StyledTable>

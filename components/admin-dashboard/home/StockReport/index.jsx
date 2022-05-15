@@ -4,7 +4,10 @@ import { Paper, TableContainer } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProductsList from "./ProductsList";
-import { getProductsStock } from "redux/slices/analytics";
+import {
+  getProductsStock,
+  loadMoreProductsStock,
+} from "redux/slices/analytics";
 
 const StockReport = ({ className }) => {
   const dispatch = useDispatch();
@@ -34,6 +37,21 @@ const StockReport = ({ className }) => {
     });
   };
 
+  const handleLoadMoreData = async (callback) => {
+    dispatch(
+      loadMoreProductsStock({
+        search,
+        sortBy: sortBy.sortLabel,
+        desc: sortBy.desc,
+        skip: productsStock.entity.length,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        callback();
+      });
+  };
+
   return (
     <TableContainer
       component={Paper}
@@ -57,6 +75,8 @@ const StockReport = ({ className }) => {
         handleChangeSearch={(searchTerm) => setSearch(searchTerm)}
         handleChangeSort={handleChangeSort}
         isLoading={productsStock.status === "loading"}
+        handleLoadMoreData={handleLoadMoreData}
+        productsStockTotalCount={productsStock.totalCount}
       />
     </TableContainer>
   );
