@@ -22,8 +22,6 @@ import withSearch from "components/HOC/withSearch";
 import { numberWithCommas } from "utils/number-helper";
 import { getPersianDate } from "utils/date-helper";
 import useBreakpoints from "utils/useBreakPoints";
-// import InfiniteScroll from "react-infinite-scroll-component";
-import InfiniteScroll from "react-infinite-scroller";
 import useInfiniteScroll from "components/hooks/useInfiniteScroll";
 
 const StyledTable = MuiStyled(Table)(({ theme }) => ({
