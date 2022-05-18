@@ -19,9 +19,14 @@ const getIncome = (range) => {
   });
 };
 
+const getOrder = (id) => {
+  return http.get(`${config.api}/order/get/${id}`);
+};
+
 // eslint-disable-next-line
 export default {
   getRecentOrders,
   getProductsStock,
   getIncome,
+  getOrder,
 };
