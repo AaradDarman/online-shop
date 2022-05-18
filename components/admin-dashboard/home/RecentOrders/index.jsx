@@ -1,32 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { styled } from "@mui/material/styles";
-import { lighten, rgba } from "polished";
-import {
-  FormHelperText,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-} from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { tableCellClasses } from "@mui/material/TableCell";
+import { Paper, TableContainer } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+
 import { getRecentOrders } from "redux/slices/analytics";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-
-import { getPersianDate } from "utils/date-helper";
-import { numberWithCommas } from "utils/number-helper";
-// import withSearch from "components/HOC/withSearch";
 import OrdersList from "./OrdersList";
-
-// const SearchableOrdersList = withSearch(OrdersList);
 
 const RecentOrders = () => {
   const dispatch = useDispatch();
@@ -53,7 +31,6 @@ const RecentOrders = () => {
         desc: sortBy.desc,
       })
     );
-    console.log("changes");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy, search]);
 
@@ -80,6 +57,7 @@ const RecentOrders = () => {
         handleChangeSort={handleChangeSort}
         handleChangeSearch={(searchTerm) => setSearch(searchTerm)}
         isLoading={recentOrders.status === "loading"}
+        searchPlaceholder="شماره سفارش ..."
       />
     </TableContainer>
   );

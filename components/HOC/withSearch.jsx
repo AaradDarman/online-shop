@@ -17,10 +17,13 @@ const StyledInput = styled.input`
   all: unset;
   padding: 2px 4px;
   color: ${({ theme }) => theme.palette.text.primary};
+  ::placeholder {
+    font-size: 14px;
+  }
 `;
 
 const withSearch = (WrappedComponent) => {
-  const WithSearch = ({ ...props }) => {
+  const WithSearch = ({ searchPlaceholder, ...props }) => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleChangeSearch = (e) => {
@@ -35,6 +38,7 @@ const withSearch = (WrappedComponent) => {
             type="text"
             onChange={handleChangeSearch}
             value={searchTerm}
+            placeholder={searchPlaceholder}
           />
         </StyledInputWraper>
         <WrappedComponent {...props} searchTerm={searchTerm} />

@@ -77,6 +77,7 @@ const StockReport = ({ className }) => {
         isLoading={productsStock.status === "loading"}
         handleLoadMoreData={handleLoadMoreData}
         productsStockTotalCount={productsStock.totalCount}
+        searchPlaceholder='نام محصول ...'
       />
     </TableContainer>
   );

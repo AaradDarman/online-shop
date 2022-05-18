@@ -20,7 +20,7 @@ const useInfiniteScroll = (elem, callback) => {
 
   function handleScroll() {
     if (
-      elem.current.scrollHeight - elem.current.scrollTop !==
+      elem.current.scrollHeight - Math.ceil(elem.current.scrollTop) >
         elem.current.clientHeight ||
       isFetching
     )

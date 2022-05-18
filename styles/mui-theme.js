@@ -38,31 +38,35 @@ export let muiDarkTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        "@media (min-width:425px)": {
+          body: {
+            "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+              backgroundColor: "transparent",
+              width: "10px",
+            },
+            "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+              borderRadius: 0,
+              backgroundColor: "#6b6b6b",
+              minHeight: 24,
+            },
+            "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
+              {
+                backgroundColor: "#959595",
+              },
+            "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
+              {
+                backgroundColor: "#959595",
+              },
+            "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
+              {
+                backgroundColor: "#959595",
+              },
+            "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+              backgroundColor: "#2b2b2b",
+            },
+          },
+        },
         body: {
-          "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-            backgroundColor: "transparent",
-            width: "10px",
-          },
-          "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-            borderRadius: 0,
-            backgroundColor: "#6b6b6b",
-            minHeight: 24,
-          },
-          "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
-            {
-              backgroundColor: "#959595",
-            },
-          "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
-            {
-              backgroundColor: "#959595",
-            },
-          "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
-            {
-              backgroundColor: "#959595",
-            },
-          "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-            backgroundColor: "#2b2b2b",
-          },
           direction: "rtl",
           padding: 0,
           margin: 0,
@@ -72,6 +76,7 @@ export let muiDarkTheme = createTheme({
           lineHeight: 1.5,
           caretColor: "#1AB8FF",
         },
+
         a: {
           color: "inherit",
           textDecoration: "none",
@@ -89,6 +94,12 @@ export let muiDarkTheme = createTheme({
     },
   },
 });
+muiDarkTheme.typography.body1 = {
+  fontSize: "1rem",
+  "@media (max-width:500px)": {
+    fontSize: "0.9rem",
+  },
+};
 
 muiDarkTheme = responsiveFontSizes(muiDarkTheme);
 
@@ -119,31 +130,35 @@ export let muiLightTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        "@media (min-width:425px)": {
+          body: {
+            "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+              backgroundColor: "transparent",
+              width: "10px",
+            },
+            "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+              borderRadius: 0,
+              backgroundColor: "#c7c7c7",
+              minHeight: 24,
+            },
+            "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
+              {
+                backgroundColor: "#A9A9A9",
+              },
+            "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
+              {
+                backgroundColor: "#A9A9A9",
+              },
+            "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
+              {
+                backgroundColor: "#A9A9A9",
+              },
+            "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+              backgroundColor: "#2b2b2b",
+            },
+          },
+        },
         body: {
-          "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-            backgroundColor: "transparent",
-            width: "10px",
-          },
-          "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-            borderRadius: 0,
-            backgroundColor: "#c7c7c7",
-            minHeight: 24,
-          },
-          "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
-            {
-              backgroundColor: "#A9A9A9",
-            },
-          "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
-            {
-              backgroundColor: "#A9A9A9",
-            },
-          "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
-            {
-              backgroundColor: "#A9A9A9",
-            },
-          "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-            backgroundColor: "#2b2b2b",
-          },
           direction: "rtl",
           padding: 0,
           margin: 0,
@@ -170,5 +185,11 @@ export let muiLightTheme = createTheme({
     },
   },
 });
+muiLightTheme.typography.body1 = {
+  fontSize: "1rem",
+  "@media (max-width:500px)": {
+    fontSize: "0.9rem",
+  },
+};
 
 muiLightTheme = responsiveFontSizes(muiLightTheme);

@@ -27,7 +27,6 @@ import useInfiniteScroll from "components/hooks/useInfiniteScroll";
 const StyledTable = MuiStyled(Table)(({ theme }) => ({
   "&": {
     position: "relative",
-    paddingBottom: "20px",
     minHeight: "200px",
   },
   "& td, th": {
