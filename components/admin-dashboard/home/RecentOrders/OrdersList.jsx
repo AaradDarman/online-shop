@@ -3,25 +3,23 @@ import React, { useEffect, useState } from "react";
 import { styled as MuiStyled } from "@mui/material/styles";
 import styled from "styled-components";
 
-import { lighten, rgba } from "polished";
+import { rgba } from "polished";
 import {
-  FormHelperText,
   IconButton,
-  Paper,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  TextField,
   useTheme,
-  Skeleton,
+  Backdrop,
+  Fade,
+  Modal,
+  Box,
 } from "@mui/material";
+
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { tableCellClasses } from "@mui/material/TableCell";
-import { useDispatch, useSelector } from "react-redux";
-import { getRecentOrders } from "redux/slices/analytics";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import PulseLoader from "react-spinners/PulseLoader";
@@ -32,6 +30,7 @@ import { numberWithCommas } from "utils/number-helper";
 import useBreakpoints from "utils/useBreakPoints";
 import withSearch from "components/HOC/withSearch";
 import { useDebounce } from "components/hooks/useDebounce";
+import OrderDetails from "./OrderDetails";
 
 const StyledTableCell = MuiStyled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -131,6 +130,17 @@ z-index: 9999;
 transform: translate(-50%, -50%);
 `;
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%) !important",
+  bgcolor: "background.default",
+  border: "none",
+  boxShadow: 0,
+  px: 4,
+};
+
 const OrdersList = ({
   recentOrders,
   sortBy,
@@ -141,6 +151,13 @@ const OrdersList = ({
 }) => {
   const breakPoints = useBreakpoints();
   const theme = useTheme();
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [targetOrderNumber, setTargetOrderNumber] = useState();
+
+  const handleOrderDetailClick = (orderNumber) => {
+    setTargetOrderNumber(orderNumber);
+    setShowOrderModal(true);
+  };
 
   const statusOptions = {
     "wait-for-pay": "در انتظار پرداخت",
@@ -243,7 +260,11 @@ const OrdersList = ({
                 </TableCell>
                 <TableCell className={order.status}>
                   <span>{statusOptions[order.status]}</span>
-                  <IconButton aria-label="show-order" size="small">
+                  <IconButton
+                    aria-label="show-order"
+                    size="small"
+                    onClick={() => handleOrderDetailClick(order.orderNumber)}
+                  >
                     <ArrowBackIosNewIcon fontSize="small" />
                   </IconButton>
                 </TableCell>
@@ -252,6 +273,25 @@ const OrdersList = ({
           )}
         </TableBody>
       </Table>
+      <Modal
+        aria-labelledby="order-modal"
+        open={showOrderModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        onBackdropClick={() => setShowOrderModal(false)}
+      >
+        <Fade in={showOrderModal}>
+          <Box sx={modalStyle} className="col-12 col-sm-8 col-md-7 col-lg-5">
+            <OrderDetails
+              orderNumber={targetOrderNumber}
+              onClose={() => setShowOrderModal(false)}
+            />
+          </Box>
+        </Fade>
+      </Modal>
     </StyledContainer>
   );
 };
