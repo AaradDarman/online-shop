@@ -10,7 +10,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import { css as Loadercss } from "@emotion/react";
 
 import api from "adapters/analytics-adapter";
-import { getPersianDate } from "utils/date-helper";
+import { getPersianDateWithTime } from "utils/date-helper";
 import { numberWithCommas } from "utils/number-helper";
 import { applyDiscount } from "utils/product-helper";
 import { shorten } from "utils/string-helper";
@@ -153,7 +153,7 @@ const OrderDetails = ({ orderNumber, onClose }) => {
                 تاریخ ثبت سفارش
               </Typography>
               <Typography variant="body1" component="strong">
-                {getPersianDate(order?.createAt)}
+                {getPersianDateWithTime(order?.createAt)}
               </Typography>
             </StyledTextContainer>
             <StyledTextContainer>

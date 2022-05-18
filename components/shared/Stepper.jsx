@@ -31,7 +31,7 @@ const greenStyle = css`
 
 const StyledStepper = styled.div`
   position: relative;
-  width: ${({ step }) => step * 25}%;
+  width: ${({ step }) => step * 33}%;
 
   .glimmer {
     position: absolute;
