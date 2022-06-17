@@ -7,15 +7,18 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-import { numberWithoutCommas } from "../utils/number-helper";
+import { numberWithoutCommas } from "utils/number-helper";
 import {
   getMinPrice,
   applyDiscount,
   getDiscountsRange,
-} from "../utils/product-helper";
+} from "utils/product-helper";
+import { convetStringToUrlFormat } from "utils/string-helper";
 
-const Wraper = styled.div`
+const Wraper = styled.article`
   position: relative;
   z-index: 1;
   .admin-btns-wraper {
@@ -109,6 +112,8 @@ const Product = ({ product, children }) => {
     // eslint-disable-next-line
   }, []);
 
+  const router = useRouter();
+
   return (
     <Wraper>
       <Card
@@ -126,82 +131,95 @@ const Product = ({ product, children }) => {
             </div>
           )}
         </>
-        <CardActionArea>
-          <div className="img-wraper" id={`img-wraper${product.name}`}>
-            <CardMedia
-              sx={{ minHeight: "427px" }}
-              component="img"
-              image={
-                imageHovered
-                  ? product.images[0]?.imgSrc.length > 1
-                    ? product.images[0]?.imgSrc[1]
-                    : product.images[0]?.imgSrc[0]
-                  : product.images[0].imgSrc[0]
-              }
-              alt="green iguana"
-            />
-            <ProductColors className="product-colors">
-              {product.images.slice(1).map((img) => (
-                <Image
-                  src={img.imgSrc[0]}
-                  key={`${product.name}-${img.color}`}
-                  alt={`${product.name}-${img.color}`}
-                  width={50}
-                  height={50}
+        <Link
+          passHref
+          // href={{
+          //   pathname: `/product/[name]`,
+          //   query: {
+          //     id: product._id,
+          //   },
+          // }}
+          href={`/product/${product._id}`}
+        >
+          <a>
+            <CardActionArea>
+              <div className="img-wraper" id={`img-wraper${product.name}`}>
+                <CardMedia
+                  sx={{ minHeight: "427px" }}
+                  component="img"
+                  image={
+                    imageHovered
+                      ? product.images[0]?.imgSrc.length > 1
+                        ? product.images[0]?.imgSrc[1]
+                        : product.images[0]?.imgSrc[0]
+                      : product.images[0].imgSrc[0]
+                  }
+                  alt="green iguana"
                 />
-              ))}
-            </ProductColors>
-          </div>
-          <CardContent
-            sx={{
-              bgcolor: "secondary.light",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Typography gutterBottom variant="h6" component="div">
-              {product?.name}
-            </Typography>
-            <div className="product-info">
-              <div className="product-sizes">
-                {product?.sizes.map((size) => (
-                  <span key={size}>{size}</span>
-                ))}
+                <ProductColors className="product-colors">
+                  {product.images.slice(1).map((img) => (
+                    <Image
+                      src={img.imgSrc[0]}
+                      key={`${product.name}-${img.color}`}
+                      alt={`${product.name}-${img.color}`}
+                      width={50}
+                      height={50}
+                    />
+                  ))}
+                </ProductColors>
               </div>
-              <div className="d-flex flex-column">
-                {product?.discounts?.length ? (
-                  <>
-                    <span className="og-price">
-                      {numberWithoutCommas(
-                        product.inventory
-                          .find((p) => p.size === product.discounts[0].size)
-                          .price.toString()
-                      )}
-                    </span>
-                    <span className="dc-price">
-                      {`${numberWithoutCommas(
-                        applyDiscount(
-                          product.discounts[0].discount,
-                          product.inventory.find(
-                            (p) => p.size === product.discounts[0].size
-                          ).price
-                        ).toString()
-                      )} `}
-                      تومان
-                    </span>
-                  </>
-                ) : (
-                  <span className="dc-price">
-                    {`${numberWithoutCommas(
-                      getMinPrice(product.inventory).toString()
-                    )} `}
-                    تومان
-                  </span>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </CardActionArea>
+              <CardContent
+                sx={{
+                  bgcolor: "secondary.light",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography gutterBottom variant="h6" component="div">
+                  {product?.name}
+                </Typography>
+                <div className="product-info">
+                  <div className="product-sizes">
+                    {product?.sizes.map((size) => (
+                      <span key={size}>{size}</span>
+                    ))}
+                  </div>
+                  <div className="d-flex flex-column">
+                    {product?.discounts?.length ? (
+                      <>
+                        <span className="og-price">
+                          {numberWithoutCommas(
+                            product.inventory
+                              .find((p) => p.size === product.discounts[0].size)
+                              .price.toString()
+                          )}
+                        </span>
+                        <span className="dc-price">
+                          {`${numberWithoutCommas(
+                            applyDiscount(
+                              product.discounts[0].discount,
+                              product.inventory.find(
+                                (p) => p.size === product.discounts[0].size
+                              ).price
+                            ).toString()
+                          )} `}
+                          تومان
+                        </span>
+                      </>
+                    ) : (
+                      <span className="dc-price">
+                        {`${numberWithoutCommas(
+                          getMinPrice(product.inventory).toString()
+                        )} `}
+                        تومان
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </CardActionArea>
+          </a>
+        </Link>
       </Card>
     </Wraper>
   );

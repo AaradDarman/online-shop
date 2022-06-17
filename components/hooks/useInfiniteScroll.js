@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useInfiniteScroll = (elem, callback) => {
+const useInfiniteScroll = (elem, callback, isEndOfList = false) => {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
@@ -10,7 +10,7 @@ const useInfiniteScroll = (elem, callback) => {
       return () => element.removeEventListener("scroll", handleScroll);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isEndOfList]);
 
   useEffect(() => {
     if (!isFetching) return;
@@ -18,16 +18,16 @@ const useInfiniteScroll = (elem, callback) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
-  function handleScroll() {
+  const handleScroll = () => {
+    if (isEndOfList) return;
     if (
       elem.current.scrollHeight - Math.ceil(elem.current.scrollTop) >
         elem.current.clientHeight ||
       isFetching
     )
       return;
-
     setIsFetching(true);
-  }
+  };
 
   return [isFetching, setIsFetching];
 };

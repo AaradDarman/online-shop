@@ -1,5 +1,9 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+
+import { resetCart } from "redux/slices/cart";
+import { resetUser } from "redux/slices/user";
+import store from "redux/store";
 // import { getToken } from "../../utils/token-helper";
 
 // export const setHeader = (token) => {
@@ -18,13 +22,19 @@ axios.interceptors.response.use(null, (error) => {
     error.response &&
     error.response.status >= 400 &&
     error.response.status < 500;
+
+  if (error?.response?.status === 401 && !_.isEmpty(store.getState().user.user)) {
+    store.dispatch(resetUser());
+    store.dispatch(resetCart());
+  }
+
   if (!expectetErrors) {
     toast.error("مشکلی از سمت سرور رخ داده است.", {
       position: "top-right",
       closeOnClick: true,
     });
     console.log("problem from server");
-    return;
+    return Promise.reject(error);
   }
 
   return Promise.reject(error);

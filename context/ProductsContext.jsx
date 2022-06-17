@@ -15,8 +15,8 @@ import { useDispatch } from "react-redux";
 
 import { productsContext } from "./products-context";
 import ProductContext from "./ProductContext";
-import EditProduct from "../components/admin-dashboard/EditProduct";
-import { deleteProduct, editProduct } from "../redux/slices/products";
+import EditProduct from "components/admin-dashboard/products/dialogs/EditProduct";
+import { deleteProduct, editProduct } from "redux/slices/products";
 
 const CancelButton = MuiStyled(Button)(({ theme }) => ({
   color: theme.palette.text.secondary,

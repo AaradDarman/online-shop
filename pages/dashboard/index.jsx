@@ -2,11 +2,13 @@ import React from "react";
 
 import Head from "next/head";
 import styled from "styled-components";
+import Cookies from "cookies";
 
 import AdminLayout from "components/layouts/AdminLayout";
 import StockReport from "components/admin-dashboard/home/StockReport";
 import RecentOrders from "components/admin-dashboard/home/RecentOrders";
 import IncomeChart from "components/admin-dashboard/home/IncomeChart";
+import { decodeToken } from "utils/token-helper";
 
 const StyledWraper = styled.div`
   width: 100%;
@@ -21,7 +23,7 @@ const StyledSection = styled.section`
   flex-direction: column;
 `;
 
-const Dashboard = (props) => {
+const Dashboard = () => {
   return (
     <StyledWraper className="row mt-5 mt-sm-0">
       <Head>
@@ -37,6 +39,35 @@ const Dashboard = (props) => {
     </StyledWraper>
   );
 };
+
+export async function getServerSideProps(ctx) {
+  const cookies = new Cookies(ctx.req, ctx.res);
+  const authorization = cookies.get("authorization");
+
+  if (!authorization) {
+    return {
+      redirect: {
+        destination: `/login?returnUrl=${ctx.resolvedUrl}&forceLogout=true`,
+        permanent: false,
+      },
+    };
+  }
+
+  const { user } = decodeToken(authorization);
+
+  if (!user.isAdmin) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 Dashboard.getLayout = function getLayout(page) {
   return <AdminLayout>{page}</AdminLayout>;

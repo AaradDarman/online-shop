@@ -19,6 +19,27 @@ export const getPersianDate = (date) => {
   return dateString;
 };
 
+export const getPersianDateWithMonthInLetters = (date) => {
+  let time = dayjs(date);
+  let td = new Intl.DateTimeFormat("fa-IR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(time);
+  return td;
+};
+
+export const addHoursToDate = (date, hours) => {
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + hours);
+  return newDate;
+};
+
+export const calculateExpireTime = (date) => {
+  const expireDate = dayjs(date).add(1, "h");
+  return expireDate.diff(dayjs(), "m");
+};
+
 export const getPersianDateWithTime = (date) => {
   let time = dayjs(date);
   let m = moment(time.format("YYYY/MM/DD HH:mm"), "YYYY/MM/DD HH:mm");

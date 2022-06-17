@@ -5,15 +5,17 @@ import Head from "next/head";
 import { Button, Backdrop, Fade, Modal, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
+import Cookies from "cookies";
 
-import AdminLayout from "../../components/layouts/AdminLayout";
-import ProductsComponent from "../../components/Products";
-import AddProduct from "../../components/admin-dashboard/AddProduct";
-import ProductContext from "../../context/ProductContext";
-import ProductsContext from "../../context/ProductsContext";
-import { productsContext } from "../../context/products-context";
-import { getProducts, addNewProduct } from "../../redux/slices/products";
-import LoadingSpinner from "../../components/shared/LoadingSpinner";
+import AdminLayout from "components/layouts/AdminLayout";
+import ProductsComponent from "components/admin-dashboard/products";
+import AddProduct from "components/admin-dashboard/products/dialogs/AddProduct";
+import ProductContext from "context/ProductContext";
+import ProductsContext from "context/ProductsContext";
+import { productsContext } from "context/products-context";
+import { getProducts, addNewProduct } from "redux/slices/products";
+import LoadingSpinner from "components/shared/LoadingSpinner";
+import { decodeToken } from "utils/token-helper";
 
 const Wraper = styled.div`
   width: 100%;
@@ -116,6 +118,35 @@ const Products = (props) => {
     </Wraper>
   );
 };
+
+export async function getServerSideProps(ctx) {
+  const cookies = new Cookies(ctx.req, ctx.res);
+  const authorization = cookies.get("authorization");
+
+  if (!authorization) {
+    return {
+      redirect: {
+        destination: `/login?returnUrl=${ctx.resolvedUrl}&forceLogout=true`,
+        permanent: false,
+      },
+    };
+  }
+
+  const { user } = decodeToken(authorization);
+
+  if (!user.isAdmin) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+}
 
 Products.getLayout = function getLayout(page) {
   return (

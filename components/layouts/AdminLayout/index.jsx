@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 
 import styled from "styled-components";
 import IconButton from "@mui/material/IconButton";
@@ -6,11 +6,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
+import { useDispatch } from "react-redux";
+import { resetUser } from "redux/slices/user";
+import { resetCart } from "redux/slices/cart";
+import axios from "axios";
 
-import Icon from "../../shared/Icon";
+import Icon from "components/shared/Icon";
 import NavigationDrawer from "./NavigationDrawer";
-import ThemeToggler from "../../ThemeToggler";
-import { appContext } from "../../../context/app-context";
+import ThemeToggler from "components/ThemeToggler";
+import { appContext } from "components/context/app-context";
 
 const Wraper = styled.div`
   .header {
@@ -189,14 +193,26 @@ const Wraper = styled.div`
 const AdminLayout = ({ children }) => {
   const router = useRouter();
   const { toggleTheme } = useContext(appContext);
+  const dispatch = useDispatch();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleOpenDrawer = () => setDrawerOpen(true);
   const handleCloseDrawer = () => setDrawerOpen(false);
 
+  const logout = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.get("/api/auth/logout");
+      dispatch(resetUser());
+      dispatch(resetCart());
+      router.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    // <RouteGuard>
     <Wraper className="dashboard-layout rtl">
       <Head>
         <title>داشبورد</title>
@@ -254,7 +270,7 @@ const AdminLayout = ({ children }) => {
           </li>
           <li className="menu-item mt-auto">
             <Link href="/logout">
-              <a>
+              <a onClick={logout}>
                 <Icon className="icon" icon="logout" size={24} />
                 <span>خروج</span>
               </a>
@@ -274,7 +290,6 @@ const AdminLayout = ({ children }) => {
       />
       <section className="main-section">{children}</section>
     </Wraper>
-    // </RouteGuard>
   );
 };
 
