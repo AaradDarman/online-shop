@@ -6,7 +6,7 @@ import { decodeToken } from "utils/token-helper";
 
 export const login = createAsyncThunk(
   "user/login",
-  async ({ username, password }) => {
+  async ({ username, password }, { rejectWithValue }) => {
     console.log("username, password");
     console.log(username, password);
     try {
@@ -50,6 +50,9 @@ const userSlice = createSlice({
     },
     [login.pending]: (state, action) => {
       state.status = "loading";
+    },
+    [login.rejected]: (state, action) => {
+      state.status = "idle";
     },
   },
 });

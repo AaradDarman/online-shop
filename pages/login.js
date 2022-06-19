@@ -3,15 +3,25 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography, useTheme } from "@mui/material";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import Link from "next/link";
+import PulseLoader from "react-spinners/PulseLoader";
+import { css as Loadercss } from "@emotion/react";
 
 import { login, resetUser } from "redux/slices/user";
 import MainLayout from "components/layouts/MainLayout";
 import { resetCart } from "redux/slices/cart";
+
+const override = Loadercss`
+position: absolute;
+left: 50%;
+top: 50%;
+z-index: 9999;
+transform: translate(-50%, -50%);
+`;
 
 const StyledWraper = styled.div`
   display: flex;
@@ -37,6 +47,7 @@ const Login = (props) => {
   const { cart, user } = useSelector((state) => state);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const theme = useTheme();
 
   useEffect(() => {
     if (!_.isEmpty(user.user && router.query.forceLogout)) {
@@ -91,6 +102,14 @@ const Login = (props) => {
         handleSubmit,
       }) => (
         <StyledWraper>
+          {user.status === "loading" && (
+            <PulseLoader
+              css={override}
+              size={10}
+              color={theme.palette.primary.main}
+              loading={true}
+            />
+          )}
           <Form className="form-wraper col-12 col-lg-3" onSubmit={handleSubmit}>
             <Typography variant="h5" marginBottom={2} className="text-center">
               ورود

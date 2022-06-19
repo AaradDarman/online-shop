@@ -17,7 +17,6 @@ import { numberWithCommas } from "utils/number-helper";
 import useBreakpoints from "utils/useBreakPoints";
 import CheckoutStepper from "./CheckoutStepper";
 import { orderContext } from "context/order-context";
-import RouteGuard from "components/RouteGuard";
 
 const mobileStyle = css`
   .checkout-proceed {
@@ -92,7 +91,7 @@ const CheckoutLayout = ({ children }) => {
   };
 
   return (
-    <RouteGuard>
+    <>
       {_.isEmpty(cart.items) ? (
         <StyledEmptyWraper>
           <img src="/images/empty-cart.svg" alt="empty-cart" />
@@ -142,7 +141,7 @@ const CheckoutLayout = ({ children }) => {
           </StyledWraper>
         </>
       )}
-    </RouteGuard>
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ import axios from "axios";
 import Icon from "components/shared/Icon";
 import NavigationDrawer from "./NavigationDrawer";
 import ThemeToggler from "components/ThemeToggler";
-import { appContext } from "components/context/app-context";
+import { appContext } from "context/app-context";
 
 const Wraper = styled.div`
   .header {

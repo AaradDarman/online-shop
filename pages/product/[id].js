@@ -212,14 +212,12 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params }) => {
   try {
     const { status, data } = await api.getProduct(params?.id);
-    if (status === 200) {
-      return {
-        props: {
-          product: data.product,
-        },
-        revalidate: 120,
-      };
-    }
+    return {
+      props: {
+        product: data?.product,
+      },
+      revalidate: 120,
+    };
   } catch (e) {
     return e;
   }
