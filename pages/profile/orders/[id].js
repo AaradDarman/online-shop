@@ -19,6 +19,7 @@ import { numberWithCommas } from "utils/number-helper";
 import { useCountdown } from "components/hooks/useCountDown";
 import { orderContext } from "context/order-context";
 import useBreakpoints from "utils/useBreakPoints";
+import axios from "axios";
 
 const mobliStyle = css`
   .order-number,
@@ -245,17 +246,19 @@ const Order = ({ order }) => {
 };
 
 export async function getServerSideProps(ctx) {
-  // res.setHeader(
-  //   "Cache-Control",
-  //   "public, s-maxage=10, stale-while-revalidate=59"
-  // );
-  console.error("server side order");
-  console.error(ctx.query);
-
-  const { data, status } = await api.getOrder(ctx.query.id);
+  const { data, status } = await axios.get(
+    `${process.env.SERVICE_URL}/order/get/${ctx.query.id}`,
+    {
+      headers: {
+        authorization: ctx.req.cookies.authorization,
+      },
+    }
+  );
 
   return {
-    props: { order: data.order },
+    props: {
+      order: data?.order,
+    },
   };
 }
 

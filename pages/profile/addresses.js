@@ -48,7 +48,7 @@ const Addresses = () => {
               </div>
               <div className="py-1">
                 <Icon icon="post" size={22} className="icon" />
-                {`0${address?.postalCode}`}
+                {address?.postalCode}
               </div>
               <div className="py-1">
                 <Icon icon="call" size={20} className="icon" />
