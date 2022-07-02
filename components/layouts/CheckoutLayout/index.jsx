@@ -100,7 +100,7 @@ const CheckoutLayout = ({ children }) => {
       ) : (
         <>
           <CheckoutStepper />
-          <StyledWraper isLg={isLg}>
+          <StyledWraper className="checkout-layout" isLg={isLg}>
             {children}
             <aside className="checkout-proceed">
               <div className="total-price-original pt-3 d-flex justify-content-between">

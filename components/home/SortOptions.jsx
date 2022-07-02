@@ -37,7 +37,7 @@ const SortOptions = ({ onSortChange }) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center py-3">
       <div className="d-none d-md-inline-flex">
         <SortIcon />
         مرتب سازی:

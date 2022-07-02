@@ -19,7 +19,7 @@ z-index: 9999;
 
 const Wraper = styled.div`
   width: 100%;
-  height: calc(100vh - 58px);
+  height: calc(100vh - 98px);
   overflow-y: scroll;
   .pagination {
     display: flex;
@@ -73,10 +73,18 @@ const Products = ({ products, className = "", totalItems }) => {
   );
 
   const handleTabChange = (newValue) => {
-    router.replace({
-      pathname: "/",
-      query: { sortBy: newValue },
-    });
+    const { category } = router.query;
+    if (category) {
+      router.replace({
+        pathname: `/${category}`,
+        query: { sortBy: newValue },
+      });
+    } else {
+      router.replace({
+        pathname: router.pathname,
+        query: { sortBy: newValue },
+      });
+    }
   };
 
   useEffect(() => {
