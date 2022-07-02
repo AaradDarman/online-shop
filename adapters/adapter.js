@@ -5,8 +5,18 @@ const createProduct = (product) => {
   return http.post(`${config.api}/product/create`, product);
 };
 
+const getCategories = () => {
+  return http.get(`${config.api}/category/get-all`);
+};
+
 const getProducts = (page = 1, sortBy) => {
   return http.get(`${config.api}/products`, { params: { page, sortBy } });
+};
+
+const getProductsByCategory = (category, page = 1, sortBy, search = "") => {
+  return http.get(`${config.api}/products/${category}`, {
+    params: { page, sortBy, search },
+  });
 };
 
 const getProduct = (id) => {
@@ -31,8 +41,10 @@ const getBasket = (userId) => {
 export default {
   createProduct,
   getProducts,
+  getProductsByCategory,
   getProduct,
   deleteProduct,
   editProduct,
   getBasket,
+  getCategories,
 };
