@@ -21,6 +21,7 @@ import { convetStringToUrlFormat } from "utils/string-helper";
 const Wraper = styled.article`
   position: relative;
   z-index: 1;
+  height: 100%;
   .admin-btns-wraper {
     position: absolute;
     top: 10px;
@@ -121,6 +122,7 @@ const Product = ({ product, children }) => {
           bgcolor: "secondary.light",
           backgroundImage: "none",
           position: "relative",
+          height: "100%",
         }}
       >
         <>
