@@ -21,8 +21,15 @@ import { productsContext } from "context/products-context";
 import CheckoutLayout from "components/layouts/CheckoutLayout";
 import Icon from "components/shared/Icon";
 import { orderContext } from "context/order-context";
+import OrderItem from "components/profile/orders/OrderItem";
 
 const StyledWraper = styled.section`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const StyledAddressWraper = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid ${({ theme }) => theme.palette.grey[800]};
@@ -30,20 +37,29 @@ const StyledWraper = styled.section`
   padding: 1rem;
 `;
 
+const StyledCartItemsWraper = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid ${({ theme }) => theme.palette.grey[800]};
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1rem;
+`;
+
 const Shipping = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state);
+  const { user, cart } = useSelector((state) => state);
   const { selectedAddress, setSelectedAddress } = useContext(orderContext);
 
   useEffect(() => {
     if (user?.user?.addresses) setSelectedAddress(user?.user?.addresses[0]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.user?.addresses]);
 
   return (
-    <>
-      <StyledWraper className="ms-0 ms-lg-2 col-12 col-lg">
+    <StyledWraper className="ps-0 ps-lg-3">
+      <StyledAddressWraper>
         {!_.isEmpty(selectedAddress) && (
           <>
             <Icon icon="location" size={24} className="ms-2" />
@@ -72,8 +88,13 @@ const Shipping = () => {
             </div>
           </>
         )}
-      </StyledWraper>
-    </>
+      </StyledAddressWraper>
+      <StyledCartItemsWraper className="mb-3 mb-lg-0">
+        {cart.items.map((item) => (
+          <OrderItem key={item._id} item={item} />
+        ))}
+      </StyledCartItemsWraper>
+    </StyledWraper>
   );
 };
 
