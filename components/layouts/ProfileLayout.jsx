@@ -14,7 +14,7 @@ import useBreakpoints from "utils/useBreakPoints";
 
 const StyledWraper = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: ${({ isLg }) => (isLg ? "wrap" : "wrap-reverse")};
   align-items: flex-start;
   .profile-main-section {
     position: relative;
@@ -30,11 +30,11 @@ const stickyStyle = css`
 `;
 
 const StyledAside = styled.nav`
-  width: 205px;
+  width: ${({ isLg }) => (isLg ? "205px" : "100%")};
+  margin-top: ${({ isLg }) => !isLg && "1rem"};
   background-color: ${({ theme }) => theme.palette.secondary.main};
   border: 1px solid ${({ theme }) => theme.palette.grey[800]};
   border-radius: 4px;
-  transition: width 1s ease;
   overflow-x: hidden;
   z-index: 1;
   display: flex;
@@ -145,7 +145,7 @@ const ProfileLayout = ({ children }) => {
   };
 
   return (
-    <StyledWraper className="container-lg py-4">
+    <StyledWraper isLg={isLg} className="container-lg py-4">
       <Head>
         <title>{`پروفایل ${
           router.pathname.includes("/profile/orders")

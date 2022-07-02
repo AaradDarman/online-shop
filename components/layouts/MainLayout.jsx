@@ -12,11 +12,6 @@ import { loadState } from "utils/browser-storage";
 import OrderContext from "context/OrderContext";
 import userApi from "adapters/user-adapter";
 
-const StyledWraper = styled.div`
-  .main-section {
-    margin-top: 58px;
-  }
-`;
 
 const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
@@ -48,10 +43,10 @@ const MainLayout = ({ children }) => {
 
   return (
     <OrderContext>
-      <StyledWraper>
+      <>
         <Header />
         <section className="main-section">{children}</section>
-      </StyledWraper>
+      </>
     </OrderContext>
   );
 };

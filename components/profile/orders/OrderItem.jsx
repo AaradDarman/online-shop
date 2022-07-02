@@ -10,6 +10,7 @@ const StyledWraper = styled.div`
   display: flex;
   align-items: stretch;
   padding: 0.8rem;
+  position: relative;
   .actions-wraper {
     border: 1px solid ${({ theme }) => theme.palette.grey[800]};
     border-radius: 4px;
@@ -19,6 +20,18 @@ const StyledWraper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
+  }
+  .item-quantity {
+    position: absolute;
+    bottom: ${({ isLg }) => (isLg ? "15px" : "-5px")};
+    left: 10px;
+    min-width: 20px;
+    height: 20px;
+    line-height: 1.2;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 4px;
+    background-color: ${({ theme }) => theme.palette.secondary.light};
   }
 `;
 
@@ -46,14 +59,17 @@ const OrderItem = ({ item }) => {
   }, []);
 
   return (
-    <StyledWraper className="item" key={item.productId}>
+    <StyledWraper className="item" key={item.productId} isLg={isLg}>
       {!isLoading && (
-        <Image
-          src={product.images[0].imgSrc[0]}
-          alt="product-image"
-          width={isLg ? 64 : 32}
-          height={isLg ? 64 : 32}
-        />
+        <>
+          <Image
+            src={product.images[0].imgSrc[0]}
+            alt="product-image"
+            width={isLg ? 64 : 32}
+            height={isLg ? 64 : 32}
+          />
+          <div className="item-quantity">{item.quantity}</div>
+        </>
       )}
     </StyledWraper>
   );

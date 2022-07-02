@@ -50,7 +50,7 @@ const Login = (props) => {
   const theme = useTheme();
 
   useEffect(() => {
-    if (!_.isEmpty(user.user && router.query.forceLogout)) {
+    if (!_.isEmpty(user.user) && router.query.forceLogout) {
       dispatch(resetUser());
       dispatch(resetCart());
     }
