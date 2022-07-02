@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState, memo } from "react";
 
 import { useRouter } from "next/router";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import Cookies from "cookies";
+import PulseLoader from "react-spinners/PulseLoader";
+import { css as Loadercss } from "@emotion/react";
+import { useTheme } from "@mui/system";
 
 import MainLayout from "components/layouts/MainLayout";
 import { orderContext } from "context/order-context";
 import ProfileLayout from "components/layouts/ProfileLayout";
 import OrdersSortOption from "components/profile/orders/OrdersSortOption";
 import userApi from "adapters/user-adapter";
-import { useSelector } from "react-redux";
 import Order from "components/profile/orders/Order";
-import Cookies from "cookies";
-import PulseLoader from "react-spinners/PulseLoader";
-import { css as Loadercss } from "@emotion/react";
-import { useTheme } from "@mui/system";
 import { decodeToken } from "utils/token-helper";
+import { Typography } from "@mui/material";
 
 const override = Loadercss`
 position: absolute;
@@ -21,6 +23,13 @@ left: 50%;
 top: 50%;
 z-index: 9999;
 transform: translate(-50%, -50%);
+`;
+
+const StyledEmptyWraper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Orders = () => {
@@ -82,8 +91,13 @@ const Orders = () => {
           color={theme.palette.primary.main}
           loading={true}
         />
-      ) : (
+      ) : orders.length ? (
         orders.map((order) => <Order key={order._id} order={order} />)
+      ) : (
+        <StyledEmptyWraper>
+          <img src="/images/empty.svg" alt="empty-list" />
+          <Typography variant="h6">لیست خالی می باشد</Typography>
+        </StyledEmptyWraper>
       )}
     </div>
   );

@@ -1,25 +1,24 @@
 import React, { useContext, useState } from "react";
 
-import MainLayout from "components/layouts/MainLayout";
-import ProfileLayout from "components/layouts/ProfileLayout";
-import api from "adapters/analytics-adapter";
 import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 import { Button, IconButton, Typography } from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
+import axios from "axios";
 
 import {
   addHoursToDate,
-  calculateExpireTime,
   getPersianDateWithMonthInLetters,
 } from "utils/date-helper";
+import MainLayout from "components/layouts/MainLayout";
+import ProfileLayout from "components/layouts/ProfileLayout";
 import DotDevider from "components/shared/DotDevider";
 import Icon from "components/shared/Icon";
-import { numberWithCommas } from "utils/number-helper";
 import { useCountdown } from "components/hooks/useCountDown";
+import OrderDetails from "components/profile/orders/OrderDetails";
 import { orderContext } from "context/order-context";
+import { numberWithCommas } from "utils/number-helper";
 import useBreakpoints from "utils/useBreakPoints";
-import axios from "axios";
 
 const mobliStyle = css`
   .order-number,
@@ -65,7 +64,6 @@ const StyledWraper = styled.div`
   }
   .back-wraper {
     border-bottom: 1px solid ${({ theme }) => theme.palette.grey[800]};
-    /* position: relative; */
     bottom: 22px;
     left: 22px;
   }
@@ -241,6 +239,9 @@ const Order = ({ order }) => {
           ))}
         </StyledAccordion>
       </div>
+      {order.items.map((item) => (
+        <OrderDetails item={item} key={item._id} />
+      ))}
     </StyledWraper>
   );
 };
