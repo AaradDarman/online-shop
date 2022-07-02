@@ -5,6 +5,8 @@ import { CacheProvider } from "@emotion/react";
 import { ThemeProvider } from "styled-components";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
+import NProgress from "nprogress";
+import Router from "next/router";
 
 import RTL from "components/RTL";
 import { muiDarkTheme, muiLightTheme } from "styles/mui-theme";
@@ -20,6 +22,16 @@ import _, { debounce } from "lodash";
 import { saveState } from "utils/browser-storage";
 
 const clientSideEmotionCache = createEmotionCache();
+
+NProgress.configure({ showSpinner: false });
+
+Router.onRouteChangeStart = (url) => {
+  NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => NProgress.done();
+
+Router.onRouteChangeError = () => NProgress.done();
 
 function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -43,6 +55,10 @@ function MyApp(props) {
       <Head>
         <title>فروشگاه اینترنتی</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+        />
       </Head>
       <MuiThemeProvider
         theme={theme === "light" ? muiLightTheme : muiDarkTheme}
