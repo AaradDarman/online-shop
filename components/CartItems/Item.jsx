@@ -16,6 +16,7 @@ import {
   decreaseItemQuantity,
   removeItemFromDbCart,
 } from "redux/slices/cart";
+import { shimmer, toBase64 } from "utils/image-helper";
 
 const StyledWraper = styled.div`
   display: flex;
@@ -33,6 +34,10 @@ const StyledWraper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
+  }
+  .loader-shimmer {
+    border-radius: 0.5rem;
+    margin-left: 5px;
   }
 `;
 
@@ -94,12 +99,17 @@ const Item = ({ item }) => {
 
   return (
     <StyledWraper className="item" key={item.productId}>
-      {!isLoading && (
+      {!isLoading ? (
         <Image
           src={product.images[0].imgSrc[0]}
           alt="product-image"
           width={200}
           height={200}
+        />
+      ) : (
+        <img
+          className="loader-shimmer"
+          src={`data:image/svg+xml;base64,${toBase64(shimmer(200, 200))}`}
         />
       )}
       <div className="item-info">
