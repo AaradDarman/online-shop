@@ -21,6 +21,7 @@ import ProductColorSelector from "components/home/Product/ProductColorSelector";
 import ProductSizeSelector from "components/home/Product/ProductSizeSelector";
 import useBreakpoints from "utils/useBreakPoints";
 import MainLayout from "components/layouts/MainLayout";
+import MyBreadCrumbs from "components/MyBreadCrumbs";
 
 const Wraper = styled.article`
   display: flex;
@@ -125,67 +126,74 @@ const Product = ({ product }) => {
     }
   };
 
+  console.log(product.categoryHierarchy);
+
   return (
-    <Wraper isMd={isMd}>
-      <Head>
-        <title>{`محصول | ${product.name}`}</title>
-      </Head>
-      <FormControl className="flex-column flex-md-row align-items-center px-3">
-        <ProductImage images={selectedImage} />
-        <div className="product-info d-flex flex-column h-100 justify-content-around">
-          <Typography gutterBottom variant="h5" component="h2">
-            {product?.name}
-          </Typography>
-          <Typography gutterBottom variant="body1" component="div">
-            {`${numberWithCommas(getPrice())} تومان`}
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            {`رنگ: ${selectedColor}`}
-          </Typography>
-          <ProductColorSelector
-            images={product.images}
-            selectedColor={selectedColor}
-            onChange={handleChangeSelectedColor}
-          />
-          <Typography gutterBottom variant="h6" component="div">
-            سایز:
-          </Typography>
-          <ProductSizeSelector
-            sizes={product.sizes}
-            selectedSize={selectedSize}
-            onChange={handleSizeChange}
-          />
-          <StyledActionsWraper isMd={isMd}>
-            {cartItem ? (
-              <>
-                <div>
-                  <IconButton onClick={handleAddItemToCart}>
-                    <AddIcon />
-                  </IconButton>
-                  {cartItem.quantity}
-                  <IconButton onClick={handleRemoveItemFromCart}>
-                    <RemoveIcon />
-                  </IconButton>
-                </div>
-                <Typography gutterBottom variant="body1" component="div">
-                  {`${numberWithCommas(getPrice() * cartItem.quantity)} تومان`}
-                </Typography>
-              </>
-            ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddItemToCart}
-                endIcon={<AddIcon />}
-                className="w-100"
-              >
-                افزودن به سبد
-              </Button>
-            )}
-          </StyledActionsWraper>
-        </div>
-      </FormControl>
-    </Wraper>
+    <>
+      <MyBreadCrumbs breadcrumbs={product.categoryHierarchy} />
+      <Wraper isMd={isMd}>
+        <Head>
+          <title>{`محصول | ${product.name}`}</title>
+        </Head>
+        <FormControl className="flex-column flex-md-row align-items-center px-3">
+          <ProductImage images={selectedImage} />
+          <div className="product-info d-flex flex-column h-100 justify-content-around">
+            <Typography gutterBottom variant="h5" component="h2">
+              {product?.name}
+            </Typography>
+            <Typography gutterBottom variant="body1" component="div">
+              {`${numberWithCommas(getPrice())} تومان`}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {`رنگ: ${selectedColor}`}
+            </Typography>
+            <ProductColorSelector
+              images={product.images}
+              selectedColor={selectedColor}
+              onChange={handleChangeSelectedColor}
+            />
+            <Typography gutterBottom variant="h6" component="div">
+              سایز:
+            </Typography>
+            <ProductSizeSelector
+              sizes={product.sizes}
+              selectedSize={selectedSize}
+              onChange={handleSizeChange}
+            />
+            <StyledActionsWraper isMd={isMd}>
+              {cartItem ? (
+                <>
+                  <div>
+                    <IconButton onClick={handleAddItemToCart}>
+                      <AddIcon />
+                    </IconButton>
+                    {cartItem.quantity}
+                    <IconButton onClick={handleRemoveItemFromCart}>
+                      <RemoveIcon />
+                    </IconButton>
+                  </div>
+                  <Typography gutterBottom variant="body1" component="div">
+                    {`${numberWithCommas(
+                      getPrice() * cartItem.quantity
+                    )} تومان`}
+                  </Typography>
+                </>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleAddItemToCart}
+                  endIcon={<AddIcon />}
+                  className="w-100"
+                >
+                  افزودن به سبد
+                </Button>
+              )}
+            </StyledActionsWraper>
+          </div>
+        </FormControl>
+      </Wraper>
+    </>
   );
 };
 
