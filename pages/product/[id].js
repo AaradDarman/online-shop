@@ -21,7 +21,7 @@ import ProductColorSelector from "components/home/Product/ProductColorSelector";
 import ProductSizeSelector from "components/home/Product/ProductSizeSelector";
 import useBreakpoints from "utils/useBreakPoints";
 import MainLayout from "components/layouts/MainLayout";
-import MyBreadCrumbs from "components/MyBreadCrumbs";
+import MyBreadCrumbs from "components/MyBreadcrumbs";
 
 const Wraper = styled.article`
   display: flex;

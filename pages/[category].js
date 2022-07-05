@@ -24,7 +24,7 @@ import MainLayout from "components/layouts/MainLayout";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Products from "components/home/Products";
-import MyBreadCrumbs from "components/MyBreadCrumbs";
+import MyBreadCrumbs from "components/MyBreadcrumbs";
 
 const Wraper = styled.article`
   direction: "rtl";
