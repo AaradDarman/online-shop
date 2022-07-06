@@ -13,9 +13,14 @@ const getUserOrders = (userId, activeTab = "in-progress") => {
   return http.get(`/api/order/${userId}?activeTab=${activeTab}`);
 };
 
+const getUserOrdersCount = (userId) => {
+  return http.get(`/api/order/get-orders-count/${userId}`);
+};
+
 // eslint-disable-next-line
 export default {
   login,
   getUserData,
   getUserOrders,
+  getUserOrdersCount,
 };
