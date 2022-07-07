@@ -9,11 +9,12 @@ import MainLayout from "components/layouts/MainLayout";
 import ProfileLayout from "components/layouts/ProfileLayout";
 import { decodeToken } from "utils/token-helper";
 import styled from "styled-components";
-import { Typography, useTheme } from "@mui/material";
+import { Badge, Typography, useTheme } from "@mui/material";
 import Link from "next/link";
 import Icon from "components/shared/Icon";
 import userApi from "adapters/user-adapter";
 import { useSelector } from "react-redux";
+import useBreakpoints from "utils/useBreakPoints";
 
 const override = Loadercss`
 position: absolute;
@@ -39,6 +40,7 @@ const Profile = () => {
   const [ordersCount, setOrdersCount] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const theme = useTheme();
+  const { isLg } = useBreakpoints();
 
   const getOrdersCount = async () => {
     setIsLoading(true);
@@ -85,31 +87,79 @@ const Profile = () => {
           </div>
           <div className="order-statuses d-flex justify-content-evenly align-items-center">
             <Link href="/profile/orders?activeTab=in-progress" passHref>
-              <a className="d-flex align-items-center">
-                <img
-                  src="/images/order-in-progress.svg"
-                  alt="order-in-progress"
-                />
+              <a className="d-flex flex-column flex-lg-row align-items-center">
+                <Badge
+                  overlap="circular"
+                  invisible={isLg}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  badgeContent={ordersCount?.inProgressOrdersCount}
+                  color="primary"
+                >
+                  <img
+                    src="/images/order-in-progress.svg"
+                    alt="order-in-progress"
+                  />
+                </Badge>
                 <div className="px-2">
-                  <Typography variant="body1">{`${ordersCount?.inProgressOrdersCount} سفارش`}</Typography>
+                  <Typography
+                    variant="body1"
+                    className="d-none d-lg-inline"
+                  >{`${ordersCount?.inProgressOrdersCount} سفارش`}</Typography>
                   <Typography variant="subtitle2">جاری</Typography>
                 </div>
               </a>
             </Link>
             <Link href="/profile/orders?activeTab=delivered" passHref>
-              <a className="d-flex align-items-center">
-                <img src="/images/order-delivered.svg" alt="order-delivered" />
+              <a className="d-flex flex-column flex-lg-row align-items-center">
+                <Badge
+                  overlap="circular"
+                  invisible={isLg}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  badgeContent={ordersCount?.deliveredOrdersCount}
+                  color="primary"
+                >
+                  <img
+                    src="/images/order-delivered.svg"
+                    alt="order-delivered"
+                  />
+                </Badge>
                 <div className="px-2">
-                  <Typography variant="body1">{`${ordersCount?.deliveredOrdersCount} سفارش`}</Typography>
+                  <Typography
+                    variant="body1"
+                    className="d-none d-lg-inline"
+                  >{`${ordersCount?.deliveredOrdersCount} سفارش`}</Typography>
                   <Typography variant="subtitle2">تحویل شده</Typography>
                 </div>
               </a>
             </Link>
             <Link href="/profile/orders?activeTab=cancelled" passHref>
-              <a className="d-flex align-items-center">
-                <img src="/images/order-cancelled.svg" alt="order-cancelled" />
+              <a className="d-flex flex-column flex-lg-row align-items-center">
+                <Badge
+                  overlap="circular"
+                  invisible={isLg}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  badgeContent={ordersCount?.cancelledOrdersCount}
+                  color="primary"
+                >
+                  <img
+                    src="/images/order-cancelled.svg"
+                    alt="order-cancelled"
+                  />
+                </Badge>
                 <div className="px-2">
-                  <Typography variant="body1">{`${ordersCount?.cancelledOrdersCount} سفارش`}</Typography>
+                  <Typography
+                    variant="body1"
+                    className="d-none d-lg-inline"
+                  >{`${ordersCount?.cancelledOrdersCount} سفارش`}</Typography>
                   <Typography variant="subtitle2">لغو شده</Typography>
                 </div>
               </a>
