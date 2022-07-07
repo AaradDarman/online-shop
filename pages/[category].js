@@ -24,11 +24,13 @@ import MainLayout from "components/layouts/MainLayout";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Products from "components/home/Products";
+import MyBreadCrumbs from "components/MyBreadcrumbs";
 
 const Wraper = styled.article`
   direction: "rtl";
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   .product-info {
@@ -37,6 +39,9 @@ const Wraper = styled.article`
   .Mui-checked {
     border: 1px solid ${({ theme }) => theme.palette.primary.main};
     border-radius: 0.5rem;
+  }
+  .category-products {
+    height: calc(100vh - 142px);
   }
 `;
 
@@ -81,10 +86,12 @@ const Category = ({ products, productsCount, categoryHierarchy }) => {
       <Head>
         <title>{`${generateCategoryHierarchy()}${router.query.title}`}</title>
       </Head>
+      <MyBreadCrumbs breadcrumbs={categoryHierarchy} />
       <Products
         products={products}
         itemsPerPage={12}
         totalItems={productsCount}
+        className="category-products"
       />
     </Wraper>
   );
