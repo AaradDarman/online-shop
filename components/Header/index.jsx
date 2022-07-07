@@ -99,7 +99,7 @@ const Header = () => {
             </Link>
           </Badge>
           <span className="divider d-none d-lg-block" />
-          {_.isEmpty(user.user) ? (
+          {_.isEmpty(user?.user) ? (
             <Button variant="outlined" color="inherit">
               <Link href="/login" passHref>
                 <a className={router.pathname === "/login" ? "active" : ""}>
@@ -118,7 +118,7 @@ const Header = () => {
                 </a>
               </Link>
             </Button>
-          ) : user.user.isAdmin ? (
+          ) : user?.user?.isAdmin ? (
             <Link href="/dashboard" passHref>
               داشبورد
             </Link>
