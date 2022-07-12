@@ -3041,6 +3041,13 @@ react-bootstrap@^2.1.2:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
+react-countdown@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/react-countdown/-/react-countdown-2.3.2.tgz#4cc27f28f2dcd47237ee66e4b9f6d2a21fc0b0ad"
+  integrity sha512-Q4SADotHtgOxNWhDdvgupmKVL0pMB9DvoFcxv5AzjsxVhzOVxnttMbAywgqeOdruwEAmnPhOhNv/awAgkwru2w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-dom@17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
@@ -3059,6 +3066,11 @@ react-icomoon@^2.4.9:
   version "2.4.9"
   resolved "https://registry.yarnpkg.com/react-icomoon/-/react-icomoon-2.4.9.tgz#d55d2a33bbc9a130d4c944c92826d14a89e54768"
   integrity sha512-wtEWY97JBt0fHkZJQRkQTbEeQOkdMXaHNl0znRE1w6+4YPlM8uRzSt5q2o1ppZILSCnsUIOEqG8SnTMq+tkXmg==
+
+react-input-verification-code@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-input-verification-code/-/react-input-verification-code-1.0.1.tgz#a4c19776e38037fe893533a220ed12aa1e5518a1"
+  integrity sha512-QOS8PNMta/yD4joxs7q8R3xdPEbVrS1DyyKTSNEPXo7EU77UGFTdyIlwNA01Acua/cN4wEyxTTOOWNY4N1vwNw==
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.3.2, react-is@^16.7.0:
   version "16.13.1"
