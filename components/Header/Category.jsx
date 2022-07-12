@@ -14,7 +14,7 @@ const StyledItem = styled.li`
     flex-direction: ${({ hasParent }) => hasParent && "column"};
     background-color: inherit;
     padding: 0 5px;
-    min-height: 100px;
+    height:0;
     opacity: 0;
     z-index: -1;
     transition: 0.3s;
@@ -22,6 +22,7 @@ const StyledItem = styled.li`
   &:hover .subcategories {
     opacity: 1;
     z-index: 3 !important;
+    height:max-content;
   }
 `;
 

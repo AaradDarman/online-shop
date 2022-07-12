@@ -44,7 +44,7 @@ function MyApp(props) {
 
   store.subscribe(
     debounce(() => {
-      if (_.isEmpty(store.getState().user.user)) {
+      if (_.isEmpty(store.getState().user?.user)) {
         saveState(store.getState().cart);
       }
     }, 800)

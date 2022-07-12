@@ -50,7 +50,7 @@ const Login = (props) => {
   const theme = useTheme();
 
   useEffect(() => {
-    if (!_.isEmpty(user.user) && router.query.forceLogout) {
+    if (!_.isEmpty(user?.user) && router.query.forceLogout) {
       dispatch(resetUser());
       dispatch(resetCart());
     }
@@ -102,7 +102,7 @@ const Login = (props) => {
         handleSubmit,
       }) => (
         <StyledWraper>
-          {user.status === "loading" && (
+          {user?.status === "loading" && (
             <PulseLoader
               css={override}
               size={10}
@@ -117,7 +117,7 @@ const Login = (props) => {
             <TextField
               variant="outlined"
               label="ایمیل یا شماره موبایل"
-              size="medium"
+              size="small"
               margin="dense"
               value={username}
               onChange={(e) => {
@@ -133,7 +133,7 @@ const Login = (props) => {
             <TextField
               variant="outlined"
               label="رمز عبور"
-              size="medium"
+              size="small"
               margin="dense"
               value={password}
               onChange={(e) => {
