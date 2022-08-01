@@ -27,6 +27,7 @@ import Icon from "components/shared/Icon";
 import { mapContext } from "context/map-context";
 import { addNewAddress } from "redux/slices/user";
 import LoadingSpinner from "components/shared/LoadingSpinner";
+import { toEnglishDigits } from "utils/number-helper";
 
 const StyledBox = MuiStyled(Box)(({ theme }) => ({
   "&": {
@@ -561,7 +562,10 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
                     value={values.receiverPhone}
                     onChange={(e) => {
                       // setReceiverPhone(e.target.value);
-                      setFieldValue("receiverPhone", e.target.value);
+                      setFieldValue(
+                        "receiverPhone",
+                        toEnglishDigits(e.target.value)
+                      );
                     }}
                     onBlur={handleBlur("receiverPhone")}
                     error={errors.receiverPhone && touched.receiverPhone}
