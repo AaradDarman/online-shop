@@ -9,6 +9,10 @@ const signup = (user) => {
   return http.post(`/api/user/signup`, user);
 };
 
+const addNewAddress = (addressInfo) => {
+  return http.post(`/api/user/add-address`, addressInfo);
+};
+
 const verify = (verificationCode) => {
   return http.post(`/api/user/verify`, verificationCode);
 };
@@ -38,4 +42,5 @@ export default {
   getUserData,
   getUserOrders,
   getUserOrdersCount,
+  addNewAddress,
 };
