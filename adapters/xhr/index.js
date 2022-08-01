@@ -24,7 +24,10 @@ axios.interceptors.response.use(null, (error) => {
     error.response.status >= 400 &&
     error.response.status < 500;
 
-  if (error?.response?.status === 401 && !_.isEmpty(store.getState().user.user)) {
+  if (
+    error?.response?.status === 401 &&
+    !_.isEmpty(store.getState().user.user)
+  ) {
     store.dispatch(resetUser());
     store.dispatch(resetCart());
   }
@@ -36,6 +39,8 @@ axios.interceptors.response.use(null, (error) => {
     });
     console.log("problem from server");
     console.log(error);
+    console.log(error.response);
+    console.log(error.message);
     return Promise.reject(error);
   }
 
