@@ -45,8 +45,8 @@ const OrderItem = ({ item }) => {
       const { status, data } = await api.getProduct(item?.productId);
       if (status === 200) {
         setProduct(data.product);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
       return e;
@@ -60,10 +60,10 @@ const OrderItem = ({ item }) => {
 
   return (
     <StyledWraper className="item" key={item.productId} isLg={isLg}>
-      {!isLoading && (
+      {!isLoading && product?.images && (
         <>
           <Image
-            src={product.images[0].imgSrc[0]}
+            src={product?.images[0].imgSrc[0]}
             alt="product-image"
             width={isLg ? 64 : 32}
             height={isLg ? 64 : 32}

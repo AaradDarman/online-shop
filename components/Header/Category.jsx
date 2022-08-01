@@ -18,6 +18,7 @@ const StyledItem = styled.li`
     opacity: 0;
     z-index: -1;
     transition: 0.3s;
+    overflow: hidden;
   }
   &:hover .subcategories {
     opacity: 1;

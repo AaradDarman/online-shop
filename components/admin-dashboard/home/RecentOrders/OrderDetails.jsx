@@ -177,7 +177,7 @@ const OrderDetails = ({ orderNumber, onClose }) => {
                 شماره موبایل
               </Typography>
               <Typography variant="body1" component="strong">
-                {`0${order?.address?.receiver?.phoneNumber}`}
+                {order?.address?.receiver?.phoneNumber}
               </Typography>
             </StyledTextContainer>
           </StyledRow>
