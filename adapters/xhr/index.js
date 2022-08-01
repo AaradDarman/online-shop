@@ -35,6 +35,7 @@ axios.interceptors.response.use(null, (error) => {
       closeOnClick: true,
     });
     console.log("problem from server");
+    console.log(error);
     return Promise.reject(error);
   }
 
