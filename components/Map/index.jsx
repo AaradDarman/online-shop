@@ -26,7 +26,7 @@ const Map = ({ onInputClick }) => {
   } = useContext(mapContext);
 
   useEffect(() => {
-    map.locate({ setView: true, maxZoom: 17 });
+    if (map) map.locate({ setView: true, maxZoom: 17 });
   }, []);
 
   return (
