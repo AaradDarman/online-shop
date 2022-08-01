@@ -32,6 +32,9 @@ export default (req, res) => {
 
         body = JSON.parse(Buffer.concat(body).toString());
         if (isSuccess) {
+          console.log("success");
+          console.log(body);
+
           let decodedToken = decodeToken(body.token);
           const cookies = new Cookies(req, res);
           cookies.set("authorization", body.token, {
