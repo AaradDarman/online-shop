@@ -1,32 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { Button, Tab, Tabs, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { Typography } from "@mui/material";
 import styled from "styled-components";
-import axios from "axios";
 import Cookies from "cookies";
 import _ from "lodash";
 
-import api from "adapters/adapter";
-import { useFirstRender } from "components/hooks/useFirstRender";
 import MainLayout from "components/layouts/MainLayout";
-import { setUser } from "redux/slices/user";
-import { addItemToDbCart, setCartItems } from "redux/slices/cart";
-import { decodeToken } from "utils/token-helper";
-import { loadState } from "utils/browser-storage";
-import Products from "components/home/Products";
-import { productsContext } from "context/products-context";
 import CheckoutLayout from "components/layouts/CheckoutLayout";
 import Icon from "components/shared/Icon";
 import { orderContext } from "context/order-context";
 import OrderItem from "components/profile/orders/OrderItem";
+import SelectAddressModal from "components/checkout/SelectAddressModal";
 
 const StyledWraper = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1;
+  .edit-map-btn {
+    color: ${({ theme }) => theme.palette.primary.main};
+    cursor: pointer;
+    margin: 1rem 0;
+  }
 `;
 
 const StyledAddressWraper = styled.div`
@@ -47,53 +42,74 @@ const StyledCartItemsWraper = styled.div`
 `;
 
 const Shipping = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
+  const [selectAddressModalOpen, setSelectAddressModalOpen] = useState(false);
   const { user, cart } = useSelector((state) => state);
   const { selectedAddress, setSelectedAddress } = useContext(orderContext);
 
   useEffect(() => {
     if (user?.user?.addresses) setSelectedAddress(user?.user?.addresses[0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.user?.addresses]);
+  }, []);
+
+  useEffect(() => {
+    _.isEmpty(selectedAddress) && setSelectAddressModalOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <StyledWraper className="ps-0 ps-lg-3">
-      <StyledAddressWraper>
-        {!_.isEmpty(selectedAddress) && (
-          <>
-            <Icon icon="location" size={24} className="ms-2" />
-            <div className="d-flex flex-column">
-              <Typography
-                variant="body1"
-                component="div"
-                color="text.secondary"
+      {!_.isEmpty(selectedAddress) ? (
+        <>
+          <StyledAddressWraper>
+            <>
+              <Icon icon="location" size={24} className="ms-2" />
+              <div className="d-flex flex-column">
+                <Typography
+                  variant="body1"
+                  component="div"
+                  color="text.secondary"
+                >
+                  آدرس تحویل سفارش
+                </Typography>
+                <Typography variant="body1" component="div">
+                  {`${selectedAddress?.province} - ${selectedAddress?.city} - ${selectedAddress?.postalAddress}`}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="div"
+                  color="text.secondary"
+                >
+                  {`${selectedAddress?.receiver?.fName} ${selectedAddress?.receiver?.lName}`}
+                </Typography>
+              </div>
+              <button
+                className="me-auto"
+                onClick={() => setSelectAddressModalOpen(true)}
               >
-                آدرس تحویل سفارش
-              </Typography>
-              <Typography variant="body1" component="div">
-                {`${selectedAddress?.province} - ${selectedAddress?.city} - ${selectedAddress?.postalAddress}`}
-              </Typography>
-              <Typography
-                variant="body1"
-                component="div"
-                color="text.secondary"
-              >
-                {`${selectedAddress?.receiver?.fName} ${selectedAddress?.receiver?.lName}`}
-              </Typography>
-            </div>
-            <div className="me-auto">
-              تغییر | ویرایش
-              <Icon icon="chevron-left" size={24} />
-            </div>
-          </>
-        )}
-      </StyledAddressWraper>
-      <StyledCartItemsWraper className="mb-3 mb-lg-0">
-        {cart.items.map((item) => (
-          <OrderItem key={item._id} item={item} />
-        ))}
-      </StyledCartItemsWraper>
+                تغییر | ویرایش
+                <Icon icon="chevron-left" size={24} />
+              </button>
+            </>
+          </StyledAddressWraper>
+          <StyledCartItemsWraper className="mb-3 mb-lg-0">
+            {cart.items.map((item) => (
+              <OrderItem key={item._id} item={item} />
+            ))}
+          </StyledCartItemsWraper>
+        </>
+      ) : (
+        <button
+          className="edit-map-btn pe-4"
+          onClick={() => setSelectAddressModalOpen(true)}
+        >
+          انتخاب آدرس
+          <Icon icon="chevron-left" size={24} />
+        </button>
+      )}
+      <SelectAddressModal
+        isOpen={selectAddressModalOpen}
+        onClose={() => setSelectAddressModalOpen(false)}
+      />
     </StyledWraper>
   );
 };
