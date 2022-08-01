@@ -22,7 +22,7 @@ const MainLayout = ({ children }) => {
     try {
       const { data, status } = await userApi.getUserData();
       if (status === 200) {
-        if (_.isEmpty(user.user.addresses)) {
+        if (user.user.addresses === undefined) {
           dispatch(setUser(data.user));
         }
         let localBasket = loadState();

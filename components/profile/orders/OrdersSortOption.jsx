@@ -27,7 +27,7 @@ const options = ["جاری", "تحویل شده", "لغو شده"];
 const optionsCase = {
   جاری: "in-progress",
   "تحویل شده": "delivered",
-  "لغو شده": "canceled",
+  "لغو شده": "cancelled",
 };
 
 const OrdersSortOption = ({ onSortChange }) => {
