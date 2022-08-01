@@ -560,7 +560,7 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
                   />
                 </StyledFormWraper>
               ) : (
-                <div>
+                <div className="w-100">
                   <StyledInputWraper>
                     <Icon
                       icon="arrow-right"
