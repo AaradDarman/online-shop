@@ -1,4 +1,4 @@
-import { useContext, memo, useEffect } from "react";
+import { useContext, memo, useEffect, useRef } from "react";
 
 import NeshanMap from "react-neshan-map-leaflet";
 import styled from "styled-components";
@@ -25,9 +25,20 @@ const Map = ({ onInputClick }) => {
     searchResults,
   } = useContext(mapContext);
 
+  function useFirstRender() {
+    const ref = useRef(true);
+    const firstRender = ref.current;
+    ref.current = false;
+    return firstRender;
+  }
+
+  const firstRender = useFirstRender();
+
   useEffect(() => {
-    if (map) map.locate({ setView: true, maxZoom: 17 });
-  }, []);
+    if (firstRender && _.isEqual(mapCenter, [28.946301, 53.647447])) {
+      map.locate({ setView: true, maxZoom: 17 });
+    }
+  }, [map]);
 
   return (
     <StyledWraper>
