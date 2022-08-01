@@ -130,6 +130,7 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
     setPostalCode,
     plaque,
     setPlaque,
+    setMapCenter,
   } = useContext(mapContext);
 
   const { user } = useSelector((state) => state);
@@ -142,6 +143,21 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
       }),
     []
   );
+
+  const handleCloseModal = () => {
+    setMapCenter([28.946301, 53.647447]);
+    formikRef.current.setFieldValue("receiverFName", "");
+    formikRef.current.setFieldValue("receiverLName", "");
+    formikRef.current.setFieldValue("receiverPhone", "");
+    formikRef.current.setFieldValue("postalCode", "");
+    formikRef.current.setFieldValue("postalAddress", "");
+    formikRef.current.setFieldValue("plaque", "");
+    formikRef.current.setFieldValue("addressState", "");
+    formikRef.current.setFieldValue("city", "");
+    setPostalAddress("");
+    onClose();
+    setState("map");
+  };
 
   const handleCheckChange = (e) => {
     setReceiverIsMe(e.target.checked);
@@ -184,18 +200,9 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
           },
         })
       ).unwrap();
-      setReceiverFName("");
-      setReceiverLName("");
-      setReceiverPhone("");
-      setPostalCode("");
-      setPlaque("");
-      setPostalAddress("");
-      setAddressState("");
-      setCity("");
-      setState("map");
-      onClose();
+      handleCloseModal();
     } catch (rejectedValueOrSerializedError) {
-      onClose();
+      handleCloseModal();
     }
   };
 
@@ -326,7 +333,10 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
                       جزییات آدرس
                     </Typography>
                   </div>
-                  <IconButton className="align-self-start" onClick={onClose}>
+                  <IconButton
+                    className="align-self-start"
+                    onClick={handleCloseModal}
+                  >
                     <CloseIcon fontSize="small" />
                   </IconButton>
                 </div>
@@ -342,7 +352,10 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
                         موقعیت مکانی آدرس را مشخص کنید.
                       </Typography>
                     </div>
-                    <IconButton className="align-self-start" onClick={onClose}>
+                    <IconButton
+                      className="align-self-start"
+                      onClick={handleCloseModal}
+                    >
                       <CloseIcon fontSize="small" />
                     </IconButton>
                   </div>
