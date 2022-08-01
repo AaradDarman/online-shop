@@ -22,7 +22,9 @@ const MainLayout = ({ children }) => {
     try {
       const { data, status } = await userApi.getUserData();
       if (status === 200) {
-        dispatch(setUser(data.user));
+        if (_.isEmpty(user.user.addresses)) {
+          dispatch(setUser(data.user));
+        }
         let localBasket = loadState();
         if (!_.isEmpty(localBasket?.items)) {
           dispatch(syncCartToDb(localBasket?.items));
