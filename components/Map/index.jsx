@@ -45,9 +45,9 @@ const Map = ({ onInputClick }) => {
         zoomControl={false}
         style={{ width: "100%", height: "100%" }}
         onInit={(L, myMap) => {
-          myMap.whenReady(() => {
-            myMap.locate({ setView: true, maxZoom: 17 });
-          });
+          // myMap.whenReady(() => {
+          //   myMap.locate({ setView: true, maxZoom: 17 });
+          // });
           myMap.setMapType("standard-day");
           myMap.zoomControl.setPosition("bottomright");
           setMap(myMap);
