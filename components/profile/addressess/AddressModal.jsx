@@ -137,7 +137,7 @@ const AddressModal = ({ isOpen, onClose, modalState = "map" }) => {
 
   const MyMap = React.useMemo(
     () =>
-      dynamic(() => import("components/map"), {
+      dynamic(() => import("components/Map"), {
         ssr: false,
       }),
     []
