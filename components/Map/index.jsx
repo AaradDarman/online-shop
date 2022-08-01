@@ -35,7 +35,11 @@ const Map = ({ onInputClick }) => {
   const firstRender = useFirstRender();
 
   useEffect(() => {
-    if (firstRender && _.isEqual(mapCenter, [28.946301, 53.647447])) {
+    if (
+      firstRender &&
+      _.isEqual(mapCenter, [28.946301, 53.647447]) &&
+      map != null
+    ) {
       map.locate({ setView: true, maxZoom: 17 });
     }
   }, [map]);
