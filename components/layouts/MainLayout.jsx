@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 
 import Header from "components/Header";
 import _ from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import styled from "styled-components";
 
 import { setUser } from "redux/slices/user";
 import { syncCartToDb, setCartItems } from "redux/slices/cart";
 import { loadState } from "utils/browser-storage";
 import OrderContext from "context/OrderContext";
 import userApi from "adapters/user-adapter";
-
+import MapContext from "context/MapContext";
+import AddressModal from "components/profile/addressess/AddressModal";
+import { appContext } from "context/app-context";
 
 const MainLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const { user } = useSelector((state) => state);
+  const { setAddressModalOpen, addressModalOpen } = useContext(appContext);
 
   const getUserData = async () => {
     try {
@@ -36,6 +36,7 @@ const MainLayout = ({ children }) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +46,16 @@ const MainLayout = ({ children }) => {
     <OrderContext>
       <>
         <Header />
-        <section className="main-section">{children}</section>
+        <section className="main-section">
+          {children}
+          <MapContext>
+            <AddressModal
+              isOpen={addressModalOpen}
+              onClose={() => setAddressModalOpen(false)}
+              modalState="map"
+            />
+          </MapContext>
+        </section>
       </>
     </OrderContext>
   );
