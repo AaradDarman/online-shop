@@ -1,4 +1,4 @@
-import { useContext, memo } from "react";
+import { useContext, memo, useEffect } from "react";
 
 import NeshanMap from "react-neshan-map-leaflet";
 import styled from "styled-components";
@@ -18,11 +18,16 @@ const Map = ({ onInputClick }) => {
     mapCenter,
     setMapCenter,
     setMap,
+    map,
     handleChangeView,
     handleChangeSearch,
     searchTerm,
     searchResults,
   } = useContext(mapContext);
+
+  useEffect(() => {
+    map.locate({ setView: true, maxZoom: 17 });
+  }, []);
 
   return (
     <StyledWraper>
@@ -45,12 +50,9 @@ const Map = ({ onInputClick }) => {
         zoomControl={false}
         style={{ width: "100%", height: "100%" }}
         onInit={(L, myMap) => {
-          // myMap.whenReady(() => {
-          //   myMap.locate({ setView: true, maxZoom: 17 });
-          // });
+          setMap(myMap);
           myMap.setMapType("standard-day");
           myMap.zoomControl.setPosition("bottomright");
-          setMap(myMap);
           myMap.on("moveend", () => {
             setMapCenter([myMap.getCenter().lat, myMap.getCenter().lng]);
           });
