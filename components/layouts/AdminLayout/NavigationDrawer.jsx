@@ -10,6 +10,10 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import ThemeToggler from "../../ThemeToggler";
 import { appContext } from "../../../context/app-context";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { resetUser } from "redux/slices/user";
+import { resetCart } from "redux/slices/cart";
 
 const StyledNav = styled.nav`
   background-color: ${({ theme }) => theme.palette.secondary.main};
@@ -122,6 +126,19 @@ const StyledNav = styled.nav`
 const NavigationDrawer = ({ isOpen, onOpen, onClose }) => {
   const router = useRouter();
   const { toggleTheme } = useContext(appContext);
+  const dispatch = useDispatch();
+
+  const logout = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.get("/api/auth/logout");
+      dispatch(resetUser());
+      dispatch(resetCart());
+      router.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SwipeableDrawer
@@ -178,7 +195,7 @@ const NavigationDrawer = ({ isOpen, onOpen, onClose }) => {
           </li>
           <li className="menu-item mt-auto">
             <Link href="/logout">
-              <a>
+              <a onClick={logout}>
                 <Icon className="icon" icon="logout" size={24} />
                 <span>خروج</span>
               </a>
