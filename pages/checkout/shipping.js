@@ -47,11 +47,6 @@ const Shipping = () => {
   const { selectedAddress, setSelectedAddress } = useContext(orderContext);
 
   useEffect(() => {
-    if (user?.user?.addresses) setSelectedAddress(user?.user?.addresses[0]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     _.isEmpty(selectedAddress) && setSelectAddressModalOpen(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
