@@ -44,7 +44,7 @@ function MyApp(props) {
 
   store.subscribe(
     debounce(() => {
-      if (_.isEmpty(store.getState().user.user)) {
+      if (_.isEmpty(store.getState().user?.user)) {
         saveState(store.getState().cart);
       }
     }, 800)
@@ -58,6 +58,11 @@ function MyApp(props) {
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
+        />
+        <link
+          href="https://static.neshan.org/sdk/leaflet/1.4.0/leaflet.css"
+          rel="stylesheet"
+          type="text/css"
         />
       </Head>
       <MuiThemeProvider

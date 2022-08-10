@@ -117,7 +117,7 @@ const Order = ({ order }) => {
             </Typography>
           </div>
           <div className="items">
-            {order.items.map((item) => (
+            {order?.items.map((item) => (
               <OrderItem key={item._id} item={item} />
             ))}
           </div>

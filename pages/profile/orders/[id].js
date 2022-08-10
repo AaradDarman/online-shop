@@ -176,7 +176,7 @@ const Order = ({ order }) => {
           <DotDevider className="d-none d-lg-inline-block" />
           <Typography variant="body1" className="order-receiver-phone">
             <span className="mute">شماره موبایل</span>
-            {`0${order.address.receiver.phoneNumber}`}
+            {order.address.receiver.phoneNumber}
           </Typography>
         </div>
         <Typography variant="body1" className="order-address">

@@ -17,6 +17,7 @@ import {
   removeItemFromDbCart,
 } from "redux/slices/cart";
 import { shimmer, toBase64 } from "utils/image-helper";
+import useBreakpoints from "utils/useBreakPoints";
 
 const StyledWraper = styled.div`
   display: flex;
@@ -46,6 +47,7 @@ const Item = ({ item }) => {
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state);
+  const { isLg } = useBreakpoints();
 
   const getProduct = async () => {
     try {
@@ -109,7 +111,9 @@ const Item = ({ item }) => {
       ) : (
         <img
           className="loader-shimmer"
-          src={`data:image/svg+xml;base64,${toBase64(shimmer(200, 200))}`}
+          src={`data:image/svg+xml;base64,${toBase64(
+            shimmer(isLg ? 200 : 150, isLg ? 200 : 100)
+          )}`}
         />
       )}
       <div className="item-info">

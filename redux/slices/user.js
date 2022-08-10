@@ -29,6 +29,135 @@ export const login = createAsyncThunk(
   }
 );
 
+export const signup = createAsyncThunk(
+  "user/signup",
+  async (
+    { fName, lName, email, phoneNumber, personalCode, password },
+    { rejectWithValue }
+  ) => {
+    console.log("signup slice");
+    try {
+      const { status, data } = await api.signup({
+        fName,
+        lName,
+        email,
+        phoneNumber,
+        personalCode,
+        password,
+      });
+      if (status === 201) {
+        toast.success(data?.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+        return data;
+      }
+    } catch (e) {
+      if (!e.response) {
+        throw e;
+      }
+      if (e.response.status != 500) {
+        toast.error(e?.response?.data?.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+      }
+      return rejectWithValue(e?.response?.data);
+    }
+  }
+);
+
+export const verify = createAsyncThunk(
+  "user/verify",
+  async (verificationCode, { rejectWithValue }) => {
+    try {
+      console.log(verificationCode);
+      const { status, data } = await api.verify({ verificationCode });
+      if (status === 200) {
+        toast.success("اکانت شما با موفقیت فعال شد", {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+      }
+    } catch (e) {
+      if (!e.response) {
+        throw e;
+      }
+      if (e.response.status != 500) {
+        toast.error(e?.response?.data?.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+      }
+      return rejectWithValue(e?.response?.data);
+    }
+  }
+);
+
+export const resendVerificationCode = createAsyncThunk(
+  "user/verify",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const { status, data } = await api.resend({ userId });
+      if (status === 200) {
+        toast.success(data.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+      }
+    } catch (e) {
+      if (!e.response) {
+        throw e;
+      }
+      if (e.response.status != 500) {
+        toast.error(e?.response?.data?.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+      }
+      return rejectWithValue(e?.response?.data);
+    }
+  }
+);
+
+export const addNewAddress = createAsyncThunk(
+  "user/add-new-address",
+  async (
+    { userId, city, province, postalCode, plaque, postalAddress, receiver },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { status, data } = await api.addNewAddress({
+        userId,
+        city,
+        province,
+        postalCode,
+        plaque,
+        postalAddress,
+        receiver,
+      });
+      if (status === 201) {
+        toast.success(data.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+        return data.newAddress;
+      }
+    } catch (e) {
+      if (!e.response) {
+        throw e;
+      }
+      if (e.response.status != 500) {
+        toast.error(e?.response?.data?.message, {
+          position: "bottom-center",
+          closeOnClick: true,
+        });
+      }
+      return rejectWithValue(e?.response?.data);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState: { status: "idle", user: {} },
@@ -52,6 +181,43 @@ const userSlice = createSlice({
       state.status = "loading";
     },
     [login.rejected]: (state, action) => {
+      state.status = "idle";
+    },
+    [signup.fulfilled]: (state, action) => {
+      state.status = "idle";
+    },
+    [signup.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [signup.rejected]: (state, action) => {
+      state.status = "idle";
+    },
+    [verify.fulfilled]: (state, action) => {
+      state.status = "idle";
+    },
+    [verify.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [verify.rejected]: (state, action) => {
+      state.status = "idle";
+    },
+    [resendVerificationCode.fulfilled]: (state, action) => {
+      state.status = "idle";
+    },
+    [resendVerificationCode.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [resendVerificationCode.rejected]: (state, action) => {
+      state.status = "idle";
+    },
+    [addNewAddress.fulfilled]: (state, action) => {
+      state.status = "idle";
+      state.user.addresses.push(action.payload);
+    },
+    [addNewAddress.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [addNewAddress.rejected]: (state, action) => {
       state.status = "idle";
     },
   },

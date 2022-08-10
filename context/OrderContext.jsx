@@ -8,13 +8,13 @@ import { orderContext } from "./order-context";
 import PaymentStatusDialog from "components/PaymentStatusDialog";
 
 const OrderContext = ({ children }) => {
-  const [selectedAddress, setSelectedAddress] = useState({});
   const [showStatusDialog, setShowStatusDialog] = useState(false);
   const [status, setStatus] = useState("");
   const [orderNumber, setOrderNumber] = useState("");
   const [trackingNumber, setTrackingNumber] = useState("");
 
   const { user } = useSelector((state) => state);
+  const [selectedAddress, setSelectedAddress] = useState({});
   const router = useRouter();
 
   const handleShowPaymentStatusDialog = (

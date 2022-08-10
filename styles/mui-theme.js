@@ -36,6 +36,17 @@ export let muiDarkTheme = createTheme({
     },
   },
   components: {
+    MuiFormLabel: {
+      styleOverrides: {
+        asterisk: {
+          color: "#db3131",
+          fontSize: "2rem",
+          "&$error": {
+            color: "#db3131",
+          },
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         "@media (min-width:425px)": {
@@ -128,6 +139,17 @@ export let muiLightTheme = createTheme({
     },
   },
   components: {
+    MuiFormLabel: {
+      styleOverrides: {
+        asterisk: {
+          color: "#db3131",
+          fontSize: "2rem",
+          "&$error": {
+            color: "#db3131",
+          },
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         "@media (min-width:425px)": {

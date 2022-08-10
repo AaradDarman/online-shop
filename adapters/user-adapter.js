@@ -5,6 +5,22 @@ const login = (user) => {
   return http.post(`/api/auth/login`, user);
 };
 
+const signup = (user) => {
+  return http.post(`/api/user/signup`, user);
+};
+
+const addNewAddress = (addressInfo) => {
+  return http.post(`/api/user/add-address`, addressInfo);
+};
+
+const verify = (verificationCode) => {
+  return http.post(`/api/user/verify`, verificationCode);
+};
+
+const resend = (userId) => {
+  return http.post(`/api/user/resend-verification-code`, userId);
+};
+
 const getUserData = () => {
   return http.get(`/api/user/user-data`);
 };
@@ -20,7 +36,11 @@ const getUserOrdersCount = (userId) => {
 // eslint-disable-next-line
 export default {
   login,
+  signup,
+  verify,
+  resend,
   getUserData,
   getUserOrders,
   getUserOrdersCount,
+  addNewAddress,
 };
