@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 
 import Image from "next/image";
 import styled from "styled-components";
-import { Radio, RadioGroup } from "@mui/material";
+import { Radio, RadioGroup, Skeleton } from "@mui/material";
 
 import useBreakpoints from "utils/useBreakPoints";
+import { shimmer, toBase64 } from "utils/image-helper";
 
 const StyledWraper = styled.div`
   display: flex;
@@ -52,7 +53,16 @@ const ProductImage = ({ images }) => {
 
   return (
     <StyledWraper className="flex-column flex-md-row-reverse">
-      <Image src={selectedImage} alt="product-image" width={512} height={512} />
+      <Image
+        placeholder="blur"
+        src={selectedImage}
+        alt="product-image"
+        width={512}
+        height={512}
+        blurDataURL={`data:image/svg+xml;base64,${toBase64(
+          shimmer("100%", 512)
+        )}`}
+      />
       <RadioGroup
         aria-labelledby="selected-image-index"
         defaultValue={selectedImage}

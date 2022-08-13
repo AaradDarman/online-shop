@@ -118,7 +118,7 @@ const Header = () => {
                 </a>
               </Link>
             </Button>
-          ) : user?.user?.isAdmin ? (
+          ) : user?.user.isAdmin ? (
             <Link href="/dashboard" passHref>
               داشبورد
             </Link>
