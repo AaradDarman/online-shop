@@ -2,7 +2,13 @@ import React, { useState } from "react";
 
 import styled, { css } from "styled-components";
 import _ from "lodash";
-import { FormControl, Typography, Button, IconButton } from "@mui/material";
+import {
+  FormControl,
+  Typography,
+  Button,
+  IconButton,
+  CircularProgress,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Head from "next/head";
@@ -183,10 +189,15 @@ const Product = ({ product }) => {
                   variant="contained"
                   color="primary"
                   onClick={handleAddItemToCart}
-                  endIcon={<AddIcon />}
+                  endIcon={cart.status !== "loading" && <AddIcon />}
                   className="w-100"
+                  disabled={cart.status === "loading"}
                 >
-                  افزودن به سبد
+                  {cart.status === "loading" ? (
+                    <CircularProgress size={24} />
+                  ) : (
+                    "افزودن به سبد"
+                  )}
                 </Button>
               )}
             </StyledActionsWraper>
