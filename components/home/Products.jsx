@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -56,6 +56,7 @@ const Wraper = styled.div`
 const Products = ({ products, className = "", totalItems }) => {
   const router = useRouter();
   const parentRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleScrollEnd = () => {
     if (products.length < totalItems) {
@@ -89,20 +90,34 @@ const Products = ({ products, className = "", totalItems }) => {
 
   useEffect(() => {
     const handleRouteChange = (url, { shallow }) => {
-      console.log(
-        `App is changing to ${url} ${
-          shallow ? "with" : "without"
-        } shallow routing`
-      );
       if (+router.query.page > 1) {
         router.query.page = "1";
       }
     };
 
+    const handleChangeStart = (url) => {
+      if (
+        url.startsWith("/product") ||
+        url.startsWith("/profile" || url.startsWith("/checkout"))
+      )
+        return;
+      setIsLoading(true);
+    };
+
+    const handleChangeEnd = (url) => {
+      setIsLoading(false);
+    };
+
     router.events.on("beforeHistoryChange", handleRouteChange);
+    router.events.on("routeChangeStart", handleChangeStart);
+    router.events.on("routeChangeComplete", handleChangeEnd);
+    router.events.on("routeChangeError", handleChangeEnd);
 
     return () => {
       router.events.off("beforeHistoryChange", handleRouteChange);
+      router.events.off("routeChangeStart", handleRouteChange);
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("routeChangeError", handleRouteChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -128,7 +143,7 @@ const Products = ({ products, className = "", totalItems }) => {
     >
       <SortOptions onSortChange={handleTabChange} />
       <div className="products-wraper row justify-content-xs-center pt-1">
-        {products?.status === "loading"
+        {isLoading
           ? Array(6)
               .fill()
               .map(() => Math.round(Math.random() * 6))

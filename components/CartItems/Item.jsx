@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Skeleton, Typography } from "@mui/material";
 import Image from "next/image";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -39,6 +39,7 @@ const StyledWraper = styled.div`
   .loader-shimmer {
     border-radius: 0.5rem;
     margin-left: 5px;
+    min-width: 150px;
   }
 `;
 
@@ -101,21 +102,31 @@ const Item = ({ item }) => {
 
   return (
     <StyledWraper className="item" key={item.productId}>
-      {!isLoading ? (
-        <Image
-          src={product.images[0].imgSrc[0]}
-          alt="product-image"
-          width={200}
-          height={200}
-        />
-      ) : (
-        <img
-          className="loader-shimmer"
-          src={`data:image/svg+xml;base64,${toBase64(
-            shimmer(isLg ? 200 : 150, isLg ? 200 : 100)
-          )}`}
-        />
-      )}
+      <div className="loader-shimmer">
+        {!isLoading ? (
+          <Image
+            src={product.images[0].imgSrc[0]}
+            alt="product-image"
+            width={200}
+            height={200}
+            layout="responsive"
+          />
+        ) : (
+          <Skeleton
+            variant="rectangular"
+            width={150}
+            height={"100%"}
+            animation="wave"
+            sx={{ borderRadius: "0.5rem" }}
+          />
+          // <img
+          //   className="loader-shimmer"
+          //   src={`data:image/svg+xml;base64,${toBase64(
+          //     shimmer(isLg ? 200 : 150, isLg ? 200 : 100)
+          //   )}`}
+          // />
+        )}
+      </div>
       <div className="item-info">
         <Typography gutterBottom variant="h5" component="h2">
           {item?.name}
