@@ -89,7 +89,7 @@ const StyledTableRow = MuiStyled(TableRow)(({ theme }) => ({
     },
   },
 
-  "& td.canceled": {
+  "& td.cancelled": {
     "& > span": {
       color: theme.palette.error.main,
       backgroundColor: rgba(theme.palette.error.main, 0.2),
@@ -162,7 +162,7 @@ const OrdersList = ({
   const statusOptions = {
     "wait-for-pay": "در انتظار پرداخت",
     "in-progress": "در حال پردازش",
-    canceled: "لغو شده",
+    cancelled: "لغو شده",
     delivered: "تحویل شده",
   };
 

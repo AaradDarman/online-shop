@@ -117,7 +117,7 @@ const OrderDetails = ({ orderNumber, onClose }) => {
     "wait-for-pay": "در انتظار پرداخت",
     "in-progress": "در حال پردازش",
     delivered: "تحویل شده",
-    canceled: "لغو شده",
+    cancelled: "لغو شده",
   };
 
   const activeStep = Object.keys(statusOptions).indexOf(order?.status);
