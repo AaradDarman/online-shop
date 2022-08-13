@@ -136,11 +136,11 @@ const OrderDetails = ({ orderNumber, onClose }) => {
         />
       ) : (
         <>
-          {order?.status !== "canceled" && (
+          {order?.status !== "cancelled" && (
             <Stepper className="mt-3" step={activeStep + 1} />
           )}
           <Typography className="mb-3" variant="body1" component="div">
-            {order?.status === "canceled" && (
+            {order?.status === "cancelled" && (
               <CancelIcon fontSize="small" color="error" />
             )}
             {statusOptions[order?.status]}
