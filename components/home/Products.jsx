@@ -61,9 +61,6 @@ const Products = ({ products, className = "", totalItems }) => {
   const handleScrollEnd = () => {
     if (products.length < totalItems) {
       handlePageChange(Math.ceil(products.length / 12) + 1);
-      setIsFetching(false);
-    } else {
-      setIsFetching(false);
     }
   };
 
@@ -101,18 +98,24 @@ const Products = ({ products, className = "", totalItems }) => {
 
     const handleChangeEnd = (url) => {
       setIsLoading(false);
+      setIsFetching(false);
+    };
+
+    const handleChangeError = (err) => {
+      setIsLoading(false);
+      setIsFetching(false);
     };
 
     router.events.on("beforeHistoryChange", handleRouteChange);
     router.events.on("routeChangeStart", handleChangeStart);
     router.events.on("routeChangeComplete", handleChangeEnd);
-    router.events.on("routeChangeError", handleChangeEnd);
+    router.events.on("routeChangeError", handleChangeError);
 
     return () => {
       router.events.off("beforeHistoryChange", handleRouteChange);
-      router.events.off("routeChangeStart", handleRouteChange);
-      router.events.off("routeChangeComplete", handleRouteChange);
-      router.events.off("routeChangeError", handleRouteChange);
+      router.events.off("routeChangeStart", handleChangeStart);
+      router.events.off("routeChangeComplete", handleChangeEnd);
+      router.events.off("routeChangeError", handleChangeError);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -127,7 +130,7 @@ const Products = ({ products, className = "", totalItems }) => {
           page,
         },
       },
-      `/${prevQuery.sortBy ? "?sortBy=" + prevQuery.sortBy : ""}`
+      `/${prevQuery?.sortBy ? "?sortBy=" + prevQuery?.sortBy : ""}`
     );
   };
 
@@ -138,7 +141,7 @@ const Products = ({ products, className = "", totalItems }) => {
     >
       <SortOptions onSortChange={handleTabChange} />
       <div className="products-wraper row justify-content-xs-center pt-1">
-        {isLoading
+        {isLoading && !isFetching
           ? Array(6)
               .fill()
               .map(() => Math.round(Math.random() * 6))
