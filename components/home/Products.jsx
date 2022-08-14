@@ -96,16 +96,7 @@ const Products = ({ products, className = "", totalItems }) => {
     };
 
     const handleChangeStart = (url) => {
-      if (
-        url.startsWith("/product") ||
-        url.startsWith("/profile") ||
-        url.startsWith("/checkout") ||
-        url.startsWith("/login") ||
-        url.startsWith("/signup") ||
-        url.startsWith("/dashboard")
-      )
-        return;
-      setIsLoading(true);
+      if (url.startsWith("/?sortBy")) setIsLoading(true);
     };
 
     const handleChangeEnd = (url) => {
