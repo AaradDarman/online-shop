@@ -39,7 +39,34 @@ function Crumb({ text: defaultText, href, last = false }) {
     return <Typography color="text.primary">{text}</Typography>;
   }
 
-  return <Link href={href}>{text}</Link>;
+  if (href === "/")
+    return (
+      <Link
+        href={{
+          pathname: "/",
+          query: {
+            title: text,
+          },
+        }}
+        as={`${href}`}
+      >
+        {text}
+      </Link>
+    );
+
+  return (
+    <Link
+      href={{
+        pathname: "/[category]",
+        query: {
+          title: text,
+        },
+      }}
+      as={`${href}`}
+    >
+      {text}
+    </Link>
+  );
 }
 
 export default MyBreadCrumbs;
