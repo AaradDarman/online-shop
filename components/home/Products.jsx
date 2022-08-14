@@ -93,7 +93,7 @@ const Products = ({ products, className = "", totalItems }) => {
     };
 
     const handleChangeStart = (url) => {
-      if (url.startsWith("/?sortBy")) setIsLoading(true);
+      if (url.includes("?sortBy")) setIsLoading(true);
     };
 
     const handleChangeEnd = (url) => {
