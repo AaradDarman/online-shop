@@ -68,25 +68,31 @@ const Category = ({ products, productsCount, categoryHierarchy }) => {
   const { isMd } = useBreakpoints();
 
   const generateCategoryHierarchy = () => {
+    console.log(categoryHierarchy.length);
+    console.log(categoryHierarchy);
     if (categoryHierarchy.length) {
       if (categoryHierarchy.length === 1) {
-        return `پوشاک ${categoryHierarchy[0].name} | `;
-      } else {
-        return `${categoryHierarchy[0].name} ${
+        return `پوشاک ${categoryHierarchy[0].name}`;
+      } else if (categoryHierarchy.length === 2) {
+        return `${categoryHierarchy[0].name} | ${
           categoryHierarchy[categoryHierarchy.length - 1].name
-        } | `;
+        } ${categoryHierarchy[0].name}`;
+      } else {
+        return `${categoryHierarchy[categoryHierarchy.length - 2].name} ${
+          categoryHierarchy[0].name
+        } | ${router.query.title}`;
       }
     } else {
-      return "دسته بندی | ";
+      return `دسته بندی | ${router.query.title}`;
     }
   };
 
   return (
     <Wraper isMd={isMd}>
       <Head>
-        <title>{`${generateCategoryHierarchy()}${router.query.title}`}</title>
+        <title>{`${generateCategoryHierarchy()}`}</title>
       </Head>
-      <MyBreadCrumbs breadcrumbs={categoryHierarchy} />
+      <MyBreadCrumbs breadcrumbs={[...categoryHierarchy]} />
       <Products
         products={products}
         itemsPerPage={12}
